@@ -1,14 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
-import Window from './components/Window';
+import LoginPage from './components/SignIn/LoginPage';
 
 function App() {
   return (
-    <div className="App">
-      <Window />
-    </div>
+    <LoginPage/>
   );
 }
 
 export default App;
-
