@@ -22,7 +22,7 @@ const Login = (props) => {
       {/* <div className="loginContainer"> */}
         <div className="CreateAccountHeader">
           <div className="Insta-Chef-Logo" alt="Insta-Chef logo"></div>
-          <h1> Create your Dai Trading Account </h1>
+          <h1> Create your ParkShark Account </h1>
         </div>
         <label className="emailLabel">
           Email
