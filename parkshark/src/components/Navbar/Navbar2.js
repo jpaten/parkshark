@@ -44,9 +44,7 @@ function Button() {
     <>
       <nav className='navbar'>
         <div className='Title'>
-          <span className="poppins-bold-pacific-blue-52px">Dai</span>
-          <span className="Span1">&nbsp;</span>
-          <span className="Span2">Trading</span>
+          <span className="poppins-bold-pacific-blue-52px">ParkShark</span>
         </div>
         <div className='menu-icon' onClick={handleClick}>
           <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
@@ -63,11 +61,11 @@ function Button() {
           </li>
           <li className='nav-item'>
             <Link
-              to='/MarketTrend'
+              to='/Listings'
               className='nav-links'
               onClick={closeMobileMenu}
             >
-              Market Trend
+              Listings
             </Link>
           </li>
           <li className='nav-item'>
