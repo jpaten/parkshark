@@ -1,0 +1,73 @@
+Collections: Listings, Users
+
+
+
+Listings
+
+//Assumptions:
+//1. First person to make the booking will get the spot
+//2. Availability is decided on whether there is a current
+//3. All users are both renters and rentees
+//4. User can't edit bookings after they are made
+
+{
+   id:"",
+   location: {
+      type: "Point",
+      coordinates: [-73.856077, 40.848447]
+   },
+   userid: "",
+   address: {
+        state:"CA",
+        city:"Los Angeles",
+        postal_code:"90034",
+        line_1:"",
+        line_2:""
+   },
+   description:"",
+   image:<base64>,
+   price:10,
+   availability:[
+       time_interval:{
+       start_time:<timestamp>, 
+       end_time:<timestamp>
+     }
+   ],
+   bookings: [
+       booking: {
+       _id:"",
+       rentee_id:"",
+       starttime:"",
+       endtime:"",
+       createdAt:<timestamp>,
+       updatedAt:<timestamp>
+     }
+   ],
+   createdAt:<timestamp>,
+   updatedAt:<timestamp> 
+}
+
+Users
+
+{
+    _id: "",
+    name: "",
+    phone: "",
+    dob: "",
+    email: "",
+    address: "",
+    bookings_id: [],
+    listings_id: [],
+    
+}
+
+Case A:
+Availability is a boolean. Renter sets either available or not. Typical available listing search would look like: 
+1. Filter all listings with availability true
+2. Perform intersection search to see if requested time interval intersects with existing bookings, filter the intersections
+
+
+Case B:
+1. Each listing has its own availability calendar (array of time intervals).
+2. Each time a booking is made the availability calendar is updated
+3. Simply filter to see if requested time interval intersects with existing bookings
