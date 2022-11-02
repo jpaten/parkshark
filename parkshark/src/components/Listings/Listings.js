@@ -1,24 +1,48 @@
-import React from 'react';
-import styled from "styled-components";
+import React, {Component} from 'react';
+import "./Listings.css";
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import axios from 'axios';
+import SpotCard from './SpotCard';
 
-class Listings extends React.Component {
-    render(){
-      return (
-        // Important! Always set the container height explicitly
-        <MainPanel1>
-        </MainPanel1>
-      );
-    }
+class Listings extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      render: false,
+      spots: []
+    };
   }
-  
-  const MainPanel1 = styled.div`
-      display: flex;
-      flex-direction: column;
-      padding: 10px 50px;
-      align-items: flex-start;
-      min-height: 1000px;
-      background-image: url("https://anima-uploads.s3.amazonaws.com/projects/628530bfce435c86033077a0/releases/628530cd5d1a5f31f0381604/img/home@1x.png");
-      background-color: black;
-    `;
 
-  export default Listings;
+  async componentDidMount() {
+    axios.get('https://b589f463-b465-495d-8886-d7ac370f8eac.mock.pstmn.io/testtwo')
+        .then(({ data}) => {
+          this.setState({ spots: data });
+          console.log(this.state.spots);})
+        .catch(e => console.log(e))
+    setTimeout(function() { //Start the timer
+        this.setState({render: true}) //After 1 second, set render to true
+    }.bind(this), 2000)
+}
+
+  render() {
+    if (this.state.spots.length > 0)
+      return (
+          <Box sx={{ flexGrow: 1 }} >
+            <Grid xs={0} sm={2}></Grid>
+            <Grid className= "grid" container spacing={5} alignItems="center" justifyContent="center" >
+              {this.state.spots.map((spot) => {
+                  return (
+                    <Grid item xs={'auto'} sm={'auto'}>
+                      <SpotCard result = {spot}/>
+                    </Grid>
+                  )
+              })}
+            </Grid>
+          </Box>
+      );
+  }
+}
+
+export default Listings;
