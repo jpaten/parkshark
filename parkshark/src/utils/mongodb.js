@@ -35,21 +35,23 @@ const listingSchema = new Schema(
             end_time:Date
           }
         ],
-        bookings: [
-            {
-            _id:mongoose.Types.ObjectId,
-            rentee_id:mongoose.Types.ObjectId,
-            starttime:Date,
-            endtime:Date,
-            createdAt:Date,
-            updatedAt:Date
-          }
-        ],
+        bookings_id: [mongoose.Types.ObjectId],
         createdAt:Date,
         updatedAt:Date 
      }
 );
 
+const bookingSchema = new Schema(
+    {
+        renter_id:mongoose.Types.ObjectId,
+        listing_id:mongoose.Types.ObjectId,
+        rentee_id:mongoose.Types.ObjectId,
+        starttime:Date,
+        endtime:Date,
+        createdAt:Date,
+        updatedAt:Date
+    }
+);
 
 const dbUrl = process.env.MONGODB_URL;
 mongoose.connect(dbUrl, { useNewUrlParser : true,
@@ -59,8 +61,9 @@ mongoose.connect(dbUrl, { useNewUrlParser : true,
         }
     });
 console.log("Connected to DB");
+
 const User = mongoose.model('User', userSchema);
-const testUser = new User({
+/* const testUser = new User({
     name:"John Doe",
     phone:"310-666-666",
     dob: Date.now(),
@@ -73,5 +76,13 @@ testUser.save().then(() => {
     console.log("Saved User Successfully")
 }).catch((error) => {
     console.log("Error: ", error)
-});
+}); */
 
+function createUser(userData){
+    const user = new User(userData);
+    user.save()
+}
+
+function queryUser(userId){
+    return User.findById(userId);
+}
