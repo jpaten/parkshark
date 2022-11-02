@@ -34,19 +34,22 @@ const listingSchema = new Schema(
             end_time:Date
           }
         ],
-        bookings: [
-            {
-            _id:mongoose.Types.ObjectId,
-            rentee_id:mongoose.Types.ObjectId,
-            starttime:Date,
-            endtime:Date,
-            createdAt:Date,
-            updatedAt:Date
-          }
-        ],
+        bookings_id: [mongoose.Types.ObjectId],
         createdAt:Date,
         updatedAt:Date 
      }
 );
 
-module.exports = userSchema, listingSchema
+const bookingSchema = new Schema(
+  {
+      renter_id:mongoose.Types.ObjectId,
+      listing_id:mongoose.Types.ObjectId,
+      rentee_id:mongoose.Types.ObjectId,
+      starttime:Date,
+      endtime:Date,
+      createdAt:Date,
+      updatedAt:Date 
+   }
+);
+
+module.exports = userSchema, listingSchema, bookingSchema
