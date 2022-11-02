@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.21.1",
+    "@emotion/core": "^11.0.0",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.2.5",
+    "@mui/material": "^5.2.7",
+    "@appbaseio/reactivesearch": "^3.42.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",

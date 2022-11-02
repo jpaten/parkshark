@@ -5,6 +5,7 @@ import 'firebase/auth'
 import Login from './Login';
 import Home from '../Home/Home'
 import Navbar from '../Navbar/Navbar';
+import Listings from '../Listings/Listings';
 import Profile from "../Profile/Profile";
 import About from "../About/About"
 import Navbar2 from "../Navbar/Navbar2";
@@ -100,6 +101,7 @@ function LoginPage() {
             <Route path="/" exact component={Home} />
             <Route path="/Login" component={LoginPage} />
             <Route path="/About" component={About} />
+            <Route path="/Listings" component={Listings} />
             <Route path="/Profile" component={Profile} />
           </Switch>
         </Router>
