@@ -91,7 +91,6 @@ function queryListing(listingId){
 }
 
 function addBookingIdToListing(listingId, bookingId) {
-    console.log(listingId)
     Listing.findOneAndUpdate({"_id": listingId},
         {$push: {bookings_id: [bookingId]}}, null, (err, docs) => {
             if (err) {
