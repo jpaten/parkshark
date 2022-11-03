@@ -52,4 +52,8 @@ const bookingSchema = new Schema(
    }
 );
 
-module.exports = userSchema, listingSchema, bookingSchema
+const User = mongoose.model("User", userSchema)
+const Listing = mongoose.model("Listing", listingSchema)
+const Booking = mongoose.model("Booking", bookingSchema)
+
+module.exports = {User, Listing, Booking}
