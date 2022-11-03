@@ -27,7 +27,7 @@ class Listings extends Component {
   }
 
   async componentDidMount() {
-    axios.get('https://b589f463-b465-495d-8886-d7ac370f8eac.mock.pstmn.io/testtwo') //Postman address
+    axios.get('https://1b78f9ae-4f30-49eb-9376-10e59074c802.mock.pstmn.io/spots') //Postman address
         .then(({ data}) => 
           this.setState({ spots: data, filteredSpots: data }))
         .catch(e => console.log(e))
@@ -60,7 +60,7 @@ class Listings extends Component {
       return (
           <Box mt={2} sx={{ flexGrow: 1 }} >
             <Grid xs={0} sm={2}></Grid>
-            <div className='filter' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <div className='filter' style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: "15px"}}>
               <TextField 
                 label="City"
                 placeholder="Any"
