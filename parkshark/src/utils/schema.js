@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+mongoose.set('debug', true);
 const Schema = mongoose.Schema;
 const userSchema = new Schema(
     {
@@ -6,7 +7,8 @@ const userSchema = new Schema(
         phone: String,
         dob: Date,
         email: String,
-        bookings_id: [mongoose.Types.ObjectId],
+        rentee_bookings_id: [mongoose.Types.ObjectId],
+        renter_bookings_id: [mongoose.Types.ObjectId],
         listings_id: [mongoose.Types.ObjectId]
     }
 );
@@ -14,7 +16,7 @@ const userSchema = new Schema(
 const listingSchema = new Schema(
     {
         location: {
-           type: String,
+           type: {type:String},
            coordinates: [mongoose.Types.Decimal128, mongoose.Types.Decimal128]
         },
         userid: mongoose.Types.ObjectId,
@@ -45,15 +47,17 @@ const bookingSchema = new Schema(
       renter_id:mongoose.Types.ObjectId,
       listing_id:mongoose.Types.ObjectId,
       rentee_id:mongoose.Types.ObjectId,
-      starttime:Date,
-      endtime:Date,
+      time_interval:{
+        start_time:Date,
+        end_time:Date,
+      },
       createdAt:Date,
       updatedAt:Date 
    }
 );
 
-const User = mongoose.model("User", userSchema)
-const Listing = mongoose.model("Listing", listingSchema)
-const Booking = mongoose.model("Booking", bookingSchema)
+const User = mongoose.model("User", userSchema, 'users');
+const Listing = mongoose.model("Listing", listingSchema, 'listings');
+const Booking = mongoose.model("Booking", bookingSchema, 'bookings');
 
 module.exports = {User, Listing, Booking}
