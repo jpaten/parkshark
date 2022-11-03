@@ -69,7 +69,6 @@ function createListing(listingData) {
 }
 
 function addBookingIdToListing(listingId, bookingId) {
-    console.log(listingId)
     Listing.findOneAndUpdate({"_id": listingId},
         {$push: {bookings_id: [bookingId]}}, null, (err, docs) => {
             if (err) {
@@ -77,6 +76,10 @@ function addBookingIdToListing(listingId, bookingId) {
             }
             console.log("Original doc: " + docs)
         })
+}
+
+function updateListingAvailability(listingId, starttime, endtime) {
+    return;
 }
 
 
@@ -98,6 +101,8 @@ function addBooking(bookingData) {
     createBooking(bookingData);
     addBookingIdToListing(listingId, bookingId);
     addBookingIdToUser(bookingId, renterId);
+    // TODO: update listing availability
+    updateListingAvailability(listingId, bookingData.start_time, bookingData.end_time)
 }
 
 
