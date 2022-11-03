@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { NavLink } from './NavbarElements'
@@ -52,7 +51,7 @@ function Button() {
         <ul className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className='nav-item'>
             <Link
-              to='/'
+              to='/Home'
               className='nav-links'
               onClick={closeMobileMenu}
             >
