@@ -23,7 +23,7 @@ const SpotCard = ({result}) => {
         <Grid item xs={12} sm={6} md={4}>
             <ResultCard>
                 <CardActionArea>
-                    <CardMedia component="img" height="300" image={result.image} alt="Property Image" />
+                    <CardMedia component="img" height="294" image={result.image} alt="Property Image" />
                     <CardContent height="200px">
                         <Typography gutterBottom variant="subtitle1" component="div" textAlign="left">
                             {result.address.city}
@@ -31,11 +31,14 @@ const SpotCard = ({result}) => {
                         <Typography variant="body2" color="text.secondary" textAlign="left">
                             {result.description}
                         </Typography>
+                        <Typography variant="body2" color="text.primary" textAlign="left">
+                        {new Date(result.availability[0].start_time*1000).toLocaleDateString('en-US', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })} - {new Date(result.availability[0].end_time*1000).toLocaleDateString('en-US', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })}
+                        </Typography>
                     </CardContent>
                 </CardActionArea>
                 <div style={{float: "left"}}>
                     <Typography variant="button" color="text.secondary" style={{position: "absolute", bottom: "2px"}} >
-                        &#36;{result.price} / Night
+                        &#36;{result.price} / Day
                     </Typography>
                 </div>
             </ResultCard>

@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 class Listings extends Component {
-
+  
   constructor(props) {
     super(props);
     var curr = new Date();
@@ -27,15 +27,9 @@ class Listings extends Component {
   }
 
   async componentDidMount() {
-    axios.get('https://b589f463-b465-495d-8886-d7ac370f8eac.mock.pstmn.io/testtwo') //Postman address
-        .then(({ data}) =>
+    axios.get('https://1b78f9ae-4f30-49eb-9376-10e59074c802.mock.pstmn.io/spots') //Postman address
+        .then(({ data}) => 
           this.setState({ spots: data, filteredSpots: data }))
-    axios.get('https://b589f463-b465-495d-8886-d7ac370f8eac.mock.pstmn.io/testtwo')
-        .then(({ data}) =>
-          this.setState({ spots: data }))
-        .then(({ data}) => {
-          this.setState({ spots: data });
-          console.log(this.state.spots);})
         .catch(e => console.log(e))
     setTimeout(function() { //Start the timer
         this.setState({render: true}) //After 1 second, set render to true
@@ -66,8 +60,8 @@ class Listings extends Component {
       return (
           <Box mt={2} sx={{ flexGrow: 1 }} >
             <Grid xs={0} sm={2}></Grid>
-            <div className='filter' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-              <TextField
+            <div className='filter' style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: "15px"}}>
+              <TextField 
                 label="City"
                 placeholder="Any"
                 onChange={newCity => this.setState({city: newCity.target.value})}
@@ -76,19 +70,19 @@ class Listings extends Component {
                 label="First Day"
                 type="date"
                 defaultValue={this.state.startDate}
-                onChange={date =>
+                onChange={date => 
                   this.setState({startDate: Date.parse(new Date(date.target.value)) / 1000})}
-                InputLabelProps={{ shrink: true }}
+                InputLabelProps={{ shrink: true }} 
               />
               <TextField
-
+                
                 label="Last Day"
                 type="date"
                 defaultValue={this.state.endDate}
                 onChange={date => this.setState({
                   endDate: Date.parse(new Date(date.target.value)) / 1000
                 })}
-                InputLabelProps={{ shrink: true }}
+                InputLabelProps={{ shrink: true }} 
               />
               <Button onClick={this.search.bind(this)}> search</Button>
             </div>
