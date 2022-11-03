@@ -96,12 +96,11 @@ function addBooking(bookingData) {
     const renterId = bookingData.renter_id
     const bookingId = bookingData._id
     createBooking(bookingData);
-    // update listing in listings collection
     addBookingIdToListing(listingId, bookingId);
-    // add booking to bookings collection
     addBookingIdToUser(bookingId, renterId);
-    // add booking id to user document via user id
 }
+
+
 // ********************************************************************
 // test data
 const testUser = new User({
