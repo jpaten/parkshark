@@ -5,6 +5,7 @@ import 'firebase/auth';
 import Login from './Login';
 import Home from "../Home/Home";
 import Listings from '../Listings/Listings';
+import ListingPage from "../Listings/listingPage"
 import Profile from "../Profile/Profile";
 import About from "../About/About";
 import Navbar2 from "../Navbar/Navbar2";
@@ -12,8 +13,8 @@ import './LoginPage.css';
 function LoginPage() {
 
   //set up the initial states//
-  const[user, setUser] = useState(''); 
-  const[email, setEmail] = useState(''); 
+  const[user, setUser] = useState('');
+  const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
   const[emailError, setEmailError] = useState('');
   const[passwordError, setPasswordError] = useState('');
@@ -101,12 +102,13 @@ function LoginPage() {
             <Route path="/Home" component={Home} />
             <Route path="/Login" component={LoginPage} />
             <Route path="/Listings" component={Listings} />
+            <Route path="/Listing" component={ListingPage}/>
             <Route path="/About" component={About} />
             <Route path="/Profile" component={Profile} />
           </Switch>
         </Router>
       </div>
-    
+
       ): (
         <Login //with all possible states
         email={email}
@@ -143,7 +145,7 @@ export default LoginPage;
           </Switch>
         </Router>
       </div>
-    
+
       ): (
         <Login //with all possible states
         email={email}
