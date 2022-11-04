@@ -128,7 +128,6 @@ function updateAvailability(listingId, bookingData){
         } else{
             listingObj.save().then(() => {
                 console.log("Added booking to listing successfully");
-                updateDone = true;
             }).catch((error) => {
                 console.log("Error: ", error);
             });
