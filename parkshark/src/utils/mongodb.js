@@ -137,7 +137,7 @@ function updateAvailability(listingId, bookingData){
 
 // ********************************************************************
 // Booking API
-
+// do not export createBooking, bookings are created via addBooking
 function createBooking(bookingData){
     const booking = new Booking(bookingData);
     booking.save().then(() => {
@@ -148,8 +148,6 @@ function createBooking(bookingData){
     
     return booking._id;
 }
-
-
 
 function addBooking(bookingData) {
     const listingId = bookingData.listing_id
@@ -171,4 +169,4 @@ function addBooking(bookingData) {
     
 }
 
-module.exports = {createUser, queryUser, removeUser, updateUser, addBookingIdToUser, createListing, queryListing, addBookingIdToListing, updateAvailability, createBooking, addBooking};
+module.exports = {createUser, queryUser, removeUser, updateUser, addBookingIdToUser, createListing, queryListing, addBookingIdToListing, updateAvailability, addBooking};

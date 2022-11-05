@@ -1,8 +1,6 @@
 const db = require('../utils/mongodb.js')
-
-
-
-
+const sample = require("./sample.js")
+const listing2 = sample.listing2
 // ********************************************************************
 // test data
 
@@ -35,7 +33,7 @@ var rawTestBooking =   {
     end_time:"2022-12-5",
     createdAt:"2022-11-2",
     updatedAt:"2022-11-2" 
- }
+}
 
 //createBooking(rawTestBooking);
 //addBooking(rawTestBooking);
@@ -75,5 +73,51 @@ const rawTestListing = {
 //listingId = "636334de410b92fcada064ac";
 //bookingId = 
 //addBookingToListing(listingId, bookingId);
-db.addBooking(rawTestBooking);
+//db.addBooking(rawTestBooking);
 
+// {
+//     start_time: "2022-01-01", 
+//     end_time: "2022-03-01"
+// },
+// {
+//     start_time: "2022-05-01", 
+//     end_time: "2022-08-01"
+// }
+const testUserId = db.createUser(rawTestUser)
+const testUser2Id = db.createUser(rawTestUser2)
+listing2.userid = testUserId
+const testlistingId = db.createListing(listing2)
+
+var rawTestBooking = {
+    renter_id:testUser2Id,
+    listing_id: testlistingId,
+    rentee_id:testUserId,
+    start_time:"2022-03-3",
+    end_time:"2022-03-4",
+    createdAt:"2022-11-2",
+    updatedAt:"2022-11-2" 
+}
+
+var rawTestBooking2 = {
+    renter_id:testUser2Id,
+    listing_id: testlistingId,
+    rentee_id:testUserId,
+    start_time:"2022-01-1",
+    end_time:"2022-02-1",
+    createdAt:"2022-11-2",
+    updatedAt:"2022-11-2" 
+}
+
+var rawTestBooking3 = {
+    renter_id:testUser2Id,
+    listing_id: testlistingId,
+    rentee_id:testUserId,
+    start_time:"2022-07-26",
+    end_time:"2022-08-1",
+    createdAt:"2022-11-2",
+    updatedAt:"2022-11-2" 
+}
+
+db.addBooking(rawTestBooking)
+db.addBooking(rawTestBooking2)
+db.addBooking(rawTestBooking3)
