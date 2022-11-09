@@ -1,4 +1,4 @@
-const db = require('../utils/mongodb.js')
+const db = require('../db/mongodb.js')
 const sample = require("./sample.js")
 const listing2 = sample.listing2
 // ********************************************************************

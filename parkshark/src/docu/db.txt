@@ -79,3 +79,24 @@ Case B:
 // *************************
 Note:
 Does front-end need to look at ObjectIds?
+
+REST API
+-Create: POST /users
+-Read: GET /users
+-Read: GET /users/:id
+-Update: PATCH /users/:id
+-Delete: DELETE /users/:id
+
+-Create: POST /listings
+-Read: GET /listings
+-Read: GET /listings/:id
+-Update: PATCH /listings/:id
+-Delete: DELETE /listings/:id
+
+-Create: POST /bookings
+-Read: GET /bookings
+-Read: GET /bookings/:id
+-Update: PATCH /bookings/:id
+-Delete: DELETE /listings/:id
+
+* request contains headers and JSON data in request body

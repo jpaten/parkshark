@@ -1,15 +1,16 @@
 const path = require('path');
 require("dotenv").config({ path: path.resolve(__dirname, '..', '.env') });
 const mongoose = require("mongoose")
-const schemas = require('./schema.js')
-
-
+const User = require("../models/user")
+const Listing = require("../models/listing")
+const Booking = require("../models/booking")
 
 const ObjectId = mongoose.Types.ObjectId
 
-const Listing = schemas.Listing
-const Booking = schemas.Booking
-const User = schemas.User
+// const schemas = require('../utils/schema.js')
+// const Listing = schemas.Listing
+// const Booking = schemas.Booking
+// const User = schemas.User
 
 const dbUrl = process.env.MONGODB_URL; 
 
