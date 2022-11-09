@@ -57,9 +57,9 @@ function addBookingIdToUser(bookingId, renterId, type) {
                 }
                 console.log("Original doc: " + docs)
             });
-    } else if (type === "rentee"){
+    } else if (type === "host"){
         User.findOneAndUpdate({"_id": renterId},
-            {$push: {rentee_bookings_id: [bookingId]} }, null, (err, docs) => {
+            {$push: {host_bookings_id: [bookingId]} }, null, (err, docs) => {
                 if (err) {
                     return console.log("Error: " + err);
                 }
@@ -152,7 +152,7 @@ function createBooking(bookingData){
 function addBooking(bookingData) {
     const listingId = bookingData.listing_id
     const renterId = bookingData.renter_id
-    const renteeId = bookingData.rentee_id
+    const hostId = bookingData.host_id
 
     if(!(bookingData.start_time instanceof Date))
         bookingData.start_time = new Date(bookingData.start_time);
@@ -164,7 +164,7 @@ function addBooking(bookingData) {
     const bookingId = createBooking(bookingData);
     addBookingIdToListing(listingId, bookingId);
     addBookingIdToUser(bookingId, renterId, "renter");
-    addBookingIdToUser(bookingId, renteeId, "rentee");
+    addBookingIdToUser(bookingId, hostId, "host");
     updateAvailability(listingId, bookingData);
     
 }

@@ -1,3 +1,6 @@
+// TODO: sanitization, validation
+
+
 Collections: Listings, Users
 
 
@@ -71,3 +74,8 @@ Case B:
 1. Each listing has its own availability calendar (array of time intervals).
 2. Each time a booking is made the availability calendar is updated
 3. Simply filter to see if requested time interval intersects with existing bookings
+
+
+// *************************
+Note:
+Does front-end need to look at ObjectIds?

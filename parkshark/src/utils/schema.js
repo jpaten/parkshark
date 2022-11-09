@@ -7,7 +7,7 @@ const userSchema = new Schema(
         phone: String,
         dob: Date,
         email: String,
-        rentee_bookings_id: [mongoose.Types.ObjectId],
+        host_bookings_id: [mongoose.Types.ObjectId],
         renter_bookings_id: [mongoose.Types.ObjectId],
         listings_id: [mongoose.Types.ObjectId]
     }
@@ -46,7 +46,7 @@ const bookingSchema = new Schema(
   {
       renter_id:mongoose.Types.ObjectId,
       listing_id:mongoose.Types.ObjectId,
-      rentee_id:mongoose.Types.ObjectId,
+      host_id:mongoose.Types.ObjectId,
       time_interval:{
         start_time:Date,
         end_time:Date,
