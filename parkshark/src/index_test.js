@@ -1,27 +1,27 @@
 require('dotenv').config()
 const geocode = require('./utils/geocode.js')
 const express = require("express")
-require("./db/mongodb")  // ensures mongoose connects to the db
-const User = require("./models/user")
+const db = require('./db/mongodb.js')
+
+const userRouter = require('./routers/user')
+const listingRouter = require('./routers/listing')
+const bookingRouter = require('./routers/booking')
+
+// require("./db/mongodb")  // ensures mongoose connects to the db
 
 const app = express()
 const port = process.env.PORT || 3000
 
 app.use(express.json())
-
-app.post('/users', (req, res) => {
-  const user = new User(req.body)
-
-  user.save().then(() => {
-    res.send(user)
-  }).catch(() => {
-    
-  })
-})
+app.use(userRouter)
+app.use(listingRouter)
+app.use(bookingRouter)
 
 app.listen(port, () => {
   console.log("Server is up on port " + port)
 })
+
+
 /*
 geocode("UCLA", (error, {latitude, longitude, location} = {}) => {
     if (error) {
