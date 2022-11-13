@@ -167,8 +167,8 @@ function addBooking(bookingData) {
     addBookingIdToListing(listingId, bookingId);
     addBookingIdToUser(bookingId, renterId, "renter");
     addBookingIdToUser(bookingId, hostId, "host");
-    updateAvailability(listingId, bookingData);
-    
+    updateAvailability(listingId, bookingData);   
 }
 
-module.exports = {createUser, queryUser, removeUser, updateUser, addBookingIdToUser, createListing, queryListing, addBookingIdToListing, updateAvailability, addBooking};
+// module.exports = {createUser, queryUser, removeUser, updateUser, addBookingIdToUser, createListing, queryListing, addBookingIdToListing, updateAvailability, addBooking};
+module.exports = {addBookingIdToUser, addBookingIdToListing, updateAvailability, addBooking};

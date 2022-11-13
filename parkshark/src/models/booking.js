@@ -10,9 +10,9 @@ const bookingSchema = new Schema(
         time_interval:{
           start_time:Date,
           end_time:Date,
-        },
-        createdAt:Date,
-        updatedAt:Date 
+        }
+     }, {
+      timestamps: true
      }
   );
 

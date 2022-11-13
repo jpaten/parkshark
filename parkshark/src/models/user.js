@@ -10,6 +10,8 @@ const userSchema = new Schema(
         host_bookings_id: [mongoose.Types.ObjectId],
         renter_bookings_id: [mongoose.Types.ObjectId],
         listings_id: [mongoose.Types.ObjectId]
+    }, {
+        timestamps: true
     }
 );
 

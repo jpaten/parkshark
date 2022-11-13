@@ -26,8 +26,8 @@ const listingSchema = new Schema(
           }
         ],
         bookings_id: [mongoose.Types.ObjectId],
-        createdAt:Date,
-        updatedAt:Date 
+     }, {
+      timestamps: true
      }
 );
 

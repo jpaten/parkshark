@@ -14,10 +14,15 @@ router.post('/users', async (req, res) => {
     }
 })
 
-// (R) GET all users
+// (R) GET users /users?email=string 
+// Find by email
 router.get('/users', async (req, res) => {
+    const match = {}
+    if (req.query.email) {
+        match.email = req.query.email
+    }
     try {
-        const users = await User.find({})
+        const users = await User.find({ match })
         res.send(users)
     } catch (e) {
         res.status(500).send(e)
