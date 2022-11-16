@@ -12,9 +12,27 @@ router.post('/listings', async (req, res) => {
         res.status(400).send(e)
     }
 })
+/*
+router.get('/listings', async (req, res) => {
+    try {
+        const listings = await Listing.find(
+            match,
+            null,
+            {
+                limit: parseInt(req.query.limit)
+            }
+        ).where('')
+        res.send(listings)
+    } catch (e) {
+        res.status(500).send(e)
+    }
+})
+*/
+
 
 // (R) GET listings /listings?long=dec&lat=dec&host_id=string&price_lo=dec&price_hi=dec&starttime=t1&endtime=t2
 // Filter listings by location (long, lat), time availability, host (?), price range
+// ?limit=10&skip=10
 router.get('/listings', async (req, res) => {
     const match = {}
 
@@ -22,31 +40,40 @@ router.get('/listings', async (req, res) => {
         match.longitude = req.query.long
         match.latitude = req.query.lat
     }
+    // TODO: search function for location
+    
     if (req.query.host_id) {
         match.host_id = req.query.host_id
     }
+
     const price_lo = -1
     if (req.query.price_lo) {
-        price_lo = req.query.price_lo
-        match.price = { $gte: price_lo }
+        const price_lo = Number(req.query.price_lo)
+        match.price = { '$gte': price_lo }
     }
+    
     const price_hi = Infinity
     if (req.query.price_hi) {
-        price_hi = req.query.price_hi
+        const price_hi = Number(req.query.price_hi)
         if (match.price) {
-            match.price[$lte] = price_hi
+            match.price['$lte'] = price_hi
         } else {
-            match.price = { $lte: price_hi }
+            match.price = { '$lte': price_hi }
         }
     }
+    
     const starttime = req.query.starttime
     const endtime = req.query.endtime
-    // TODO: search function
-
+    // TODO: search function for time availability
+    // console.log(match)
     try {
-        const listings = await Listing.find({
-            match
-        })
+        const listings = await Listing.find(
+            match,
+            null,
+            {
+                limit: parseInt(req.query.limit)
+            }
+        )
         res.send(listings)
     } catch (e) {
         res.status(500).send(e)

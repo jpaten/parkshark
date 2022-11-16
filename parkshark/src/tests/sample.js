@@ -21,9 +21,9 @@ const listing1 = {
             end_time: "2022-03-01"
         }
     ],
-    bookings_id: [],
-    createdAt: "2022-01-01",
-    updatedAt: "2022-01-01", 
+    bookings_id: []
+    //createdAt: "2022-01-01",
+    //updatedAt: "2022-01-01"
 }
 
 const listing2 = {
@@ -53,8 +53,8 @@ const listing2 = {
         }
     ],
     bookings_id: [],
-    createdAt: "2022-01-01",
-    updatedAt: "2022-01-01", 
+    //createdAt: "2022-01-01",
+    //updatedAt: "2022-01-01", 
 }
 
 const listing3 = {
@@ -119,9 +119,9 @@ const listing4 = {
             end_time: "2022-10-01"
         }
     ],
-    bookings_id: [],
-    createdAt: "2022-05-01",
-    updatedAt: "2022-06-15", 
+    bookings_id: []
+    //createdAt: "2022-05-01",
+    //updatedAt: "2022-06-15", 
 }
 
 const listing5 = {
@@ -150,9 +150,9 @@ const listing5 = {
             end_time: "2022-12-01"
         }
     ],
-    bookings_id: [],
-    createdAt: "2022-02-01",
-    updatedAt: "2022-09-15", 
+    bookings_id: []
+    //createdAt: "2022-02-01",
+    //updatedAt: "2022-09-15", 
 }
 
 const listing6 = {

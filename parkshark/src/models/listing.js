@@ -2,12 +2,24 @@ const mongoose = require("mongoose");
 mongoose.set('debug', true);
 const Schema = mongoose.Schema;
 
+const pointSchema = new Schema({
+  type: {
+    type: String,
+    enum: ['Point'],
+    required: true
+  },
+  coordinates: {
+    type: [Number],
+    required: true
+  }
+});
+
 const listingSchema = new Schema(
     {
         location: {
-           type: {type:String},
-           coordinates: [mongoose.Types.Decimal128, mongoose.Types.Decimal128]
-        },
+          type: pointSchema,
+          index: '2dsphere'
+      },
         userid: mongoose.Types.ObjectId,
         address: {
              state:String,
