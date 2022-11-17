@@ -88,9 +88,9 @@ function addBookingIdToUser(bookingId, renterId, type) {
 
 // }
 
-// function queryListing(listingId){
-//     return Listing.findById(listingId);
-// }
+function queryListing(listingId){
+    return Listing.findById(listingId);
+}
 
 function addBookingIdToListing(listingId, bookingId) {
     Listing.findOneAndUpdate({"_id": listingId},
@@ -140,7 +140,7 @@ function updateAvailability(listingId, bookingData){
 // ********************************************************************
 // Booking API
 // do not export createBooking, bookings are created via addBooking
-function createBooking(bookingData){
+async function createBooking (bookingData){
     const booking = new Booking(bookingData);
     booking.save().then(() => {
         console.log("Saved booking successfully");
@@ -148,10 +148,10 @@ function createBooking(bookingData){
         console.log("Error: ", error);
     });
     
-    return booking._id;
+    return booking;
 }
 
-function addBooking(bookingData) {
+async function addBooking(bookingData) {
     const listingId = bookingData.listing_id
     const renterId = bookingData.renter_id
     const hostId = bookingData.host_id
@@ -163,10 +163,12 @@ function addBooking(bookingData) {
     if(!(bookingData.end_time instanceof Date))
         bookingData.end_time = new Date(bookingData.end_time);
     
-    const bookingId = createBooking(bookingData);
-    addBookingIdToListing(listingId, bookingId);
-    addBookingIdToUser(bookingId, renterId, "renter");
-    addBookingIdToUser(bookingId, hostId, "host");
+    const booking = await createBooking(bookingData);
+    console.log("Booking created")
+    addBookingIdToListing(listingId, booking._id);
+    addBookingIdToUser(booking._id, renterId, "renter");
+    addBookingIdToUser(booking._id, hostId, "host");
+    console.log("Id created")
     updateAvailability(listingId, bookingData);   
 }
 

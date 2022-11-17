@@ -1,9 +1,6 @@
 // TODO: sanitization, validation
 
-
-Collections: Listings, Users
-
-
+Collections: Listings, Users, Bookings
 
 Listings
 
@@ -12,57 +9,6 @@ Listings
 //2. Availability is decided on whether there is a current
 //3. All users are both renters and rentees
 //4. User can't edit bookings after they are made
-
-{
-   id:"",
-   location: {
-      type: "Point",
-      coordinates: [-73.856077, 40.848447]
-   },
-   userid: "",
-   address: {
-        state:"CA",
-        city:"Los Angeles",
-        postal_code:"90034",
-        line_1:"",
-        line_2:""
-   },
-   description:"",
-   image:<base64>,
-   price:10,
-   availability:[
-       time_interval:{
-       start_time:<timestamp>, 
-       end_time:<timestamp>
-     }
-   ],
-   bookings: [
-       booking: {
-       _id:"",
-       rentee_id:"",
-       starttime:"",
-       endtime:"",
-       createdAt:<timestamp>,
-       updatedAt:<timestamp>
-     }
-   ],
-   createdAt:<timestamp>,
-   updatedAt:<timestamp> 
-}
-
-Users
-
-{
-    _id: "",
-    name: "",
-    phone: "",
-    dob: "",
-    email: "",
-    address: "",
-    bookings_id: [],
-    listings_id: [],
-    
-}
 
 Case A:
 Availability is a boolean. Renter sets either available or not. Typical available listing search would look like: 
@@ -83,7 +29,7 @@ How is HTTP request authenticated?
 
 REST API
 -Create: POST /users
--Read: GET /users
+-Read: GET /users?email=string 
 -Read: GET /users/:id
 -Update: PATCH /users/:id
 -Delete: DELETE /users/:id
@@ -91,18 +37,16 @@ REST API
     > User wants to get renter bookings/host bookings/listings by ID
 
 -Create: POST /listings
--Read: GET /listings
+-Read: GET /listings?long=dec&lat=dec&host_id=string&price_lo=dec&price_hi=dec&starttime=t1&endtime=t2&limit=int&skip=int
 -Read: GET /listings/:id
--Filter/Search: GET listings by location (long, lat), time availability, host (?), price range
 -Update: PATCH /listings/:id
 -Delete: DELETE /listings/:id
 
--Create: POST /bookings
--Read: GET /bookings
+-Create: POST /bookings?renter_id=string&listing_id=string&host_id=string&starttime=t1&endtime=t2
+-Read: GET /bookings?renter_id=string&listing_id=string&host_id=string
 -Read: GET /bookings/:id
--Filter: GET bookings by host or renter or listing (?)
 -Update: PATCH /bookings/:id
--Delete: DELETE /listings/:id
+-Delete: DELETE /bookings/:id
 
     > Creating a booking means updating host, renter and listing documents
 

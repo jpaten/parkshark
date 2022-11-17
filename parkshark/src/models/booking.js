@@ -7,10 +7,8 @@ const bookingSchema = new Schema(
         renter_id:mongoose.Types.ObjectId,
         listing_id:mongoose.Types.ObjectId,
         host_id:mongoose.Types.ObjectId,
-        time_interval:{
-          start_time:Date,
-          end_time:Date,
-        }
+        start_time:Date,
+        end_time:Date,
      }, {
       timestamps: true
      }

@@ -12,35 +12,24 @@ router.post('/listings', async (req, res) => {
         res.status(400).send(e)
     }
 })
-/*
-router.get('/listings', async (req, res) => {
-    try {
-        const listings = await Listing.find(
-            match,
-            null,
-            {
-                limit: parseInt(req.query.limit)
-            }
-        ).where('')
-        res.send(listings)
-    } catch (e) {
-        res.status(500).send(e)
-    }
-})
-*/
 
-
-// (R) GET listings /listings?long=dec&lat=dec&host_id=string&price_lo=dec&price_hi=dec&starttime=t1&endtime=t2
+// (R) GET listings /listings?long=dec&lat=dec&host_id=string&price_lo=dec&price_hi=dec&starttime=t1&endtime=t2&limit=l&skip=s
 // Filter listings by location (long, lat), time availability, host (?), price range
 // ?limit=10&skip=10
 router.get('/listings', async (req, res) => {
     const match = {}
-
+    const METERS_PER_MILE = 1609.34
+    const maxDistInMiles = 5
     if (req.query.long && req.query.lat) {
-        match.longitude = req.query.long
-        match.latitude = req.query.lat
+        // returns listings ordered by nearest to long, lat
+        match.location = {$nearSphere: {
+            $geometry: {
+                type: "Point",
+                coordinates: [req.query.long, req.query.lat]
+            },
+            $maxDistance: maxDistInMiles * METERS_PER_MILE
+        }}
     }
-    // TODO: search function for location
     
     if (req.query.host_id) {
         match.host_id = req.query.host_id
@@ -65,13 +54,14 @@ router.get('/listings', async (req, res) => {
     const starttime = req.query.starttime
     const endtime = req.query.endtime
     // TODO: search function for time availability
-    // console.log(match)
+
     try {
         const listings = await Listing.find(
             match,
             null,
             {
-                limit: parseInt(req.query.limit)
+                limit: parseInt(req.query.limit),
+                skip: parseInt(req.query.skip)
             }
         )
         res.send(listings)

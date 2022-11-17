@@ -83,10 +83,10 @@ const rawTestListing = {
 //     start_time: "2022-05-01", 
 //     end_time: "2022-08-01"
 // }
-const testUserId = db.createUser(rawTestUser)
-const testUser2Id = db.createUser(rawTestUser2)
-listing2.userid = testUserId
-const testlistingId = db.createListing(listing2)
+// const testUserId = db.createUser(rawTestUser)
+// const testUser2Id = db.createUser(rawTestUser2)
+// listing2.userid = testUserId
+// const testlistingId = db.createListing(listing2)
 
 var rawTestBooking = {
     renter_id:testUser2Id,
@@ -118,6 +118,6 @@ var rawTestBooking3 = {
     updatedAt:"2022-11-2" 
 }
 
-db.addBooking(rawTestBooking)
-db.addBooking(rawTestBooking2)
-db.addBooking(rawTestBooking3)
+// db.addBooking(rawTestBooking)
+// db.addBooking(rawTestBooking2)
+// db.addBooking(rawTestBooking3)

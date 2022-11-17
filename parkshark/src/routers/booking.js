@@ -1,11 +1,24 @@
 const express = require("express")
 const router = new express.Router()
 const Booking = require("../models/booking")
+const db = require('../db/mongodb.js')
 
 // (C)
-// addBooking from mongodb.js
-router.post('/bookings', async (req, res) => {
-    
+// call addBooking from mongodb.js
+router.post('/bookings', (req, res) => {
+    var b = {
+        renter_id: req.query.renter_id,
+        listing_id: req.query.listing_id,
+        host_id: req.query.host_id,
+        start_time: req.query.starttime,
+        end_time: req.query.endtime
+    }
+    try {
+        const booking = db.addBooking(b)
+        res.status(201).send(booking)
+    } catch (e) {
+        res.status(400).send(e)
+    }
 })
 
 // (R) GET bookings /bookings?renter_id=string&host_id=string&listing_id=string
