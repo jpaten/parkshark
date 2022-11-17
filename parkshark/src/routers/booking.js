@@ -6,15 +6,8 @@ const db = require('../db/mongodb.js')
 // (C)
 // call addBooking from mongodb.js
 router.post('/bookings', (req, res) => {
-    var b = {
-        renter_id: req.query.renter_id,
-        listing_id: req.query.listing_id,
-        host_id: req.query.host_id,
-        start_time: req.query.starttime,
-        end_time: req.query.endtime
-    }
     try {
-        const booking = db.addBooking(b)
+        const booking = db.addBooking(req.body)
         res.status(201).send(booking)
     } catch (e) {
         res.status(400).send(e)

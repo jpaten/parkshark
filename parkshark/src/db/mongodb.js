@@ -57,7 +57,7 @@ function addBookingIdToUser(bookingId, renterId, type) {
                 if (err) {
                     return console.log("Error: " + err);
                 }
-                console.log("Original doc: " + docs)
+                // console.log("Original doc: " + docs)
             });
     } else if (type === "host"){
         User.findOneAndUpdate({"_id": renterId},
@@ -65,7 +65,7 @@ function addBookingIdToUser(bookingId, renterId, type) {
                 if (err) {
                     return console.log("Error: " + err);
                 }
-                console.log("Original doc: " + docs)
+                // console.log("Original doc: " + docs)
             });
     } else {
         console.log("Invalid type of renter to add bookingId!")
@@ -98,7 +98,7 @@ function addBookingIdToListing(listingId, bookingId) {
             if (err) {
                 return console.log("Error: " + err);
             }
-            console.log("Original doc: " + docs)
+            // console.log("Original doc: " + docs)
         })
 }
 
@@ -140,18 +140,17 @@ function updateAvailability(listingId, bookingData){
 // ********************************************************************
 // Booking API
 // do not export createBooking, bookings are created via addBooking
-async function createBooking (bookingData){
+function createBooking (bookingData){
     const booking = new Booking(bookingData);
     booking.save().then(() => {
         console.log("Saved booking successfully");
     }).catch((error) => {
         console.log("Error: ", error);
     });
-    
     return booking;
 }
 
-async function addBooking(bookingData) {
+function addBooking(bookingData) {
     const listingId = bookingData.listing_id
     const renterId = bookingData.renter_id
     const hostId = bookingData.host_id
@@ -163,13 +162,12 @@ async function addBooking(bookingData) {
     if(!(bookingData.end_time instanceof Date))
         bookingData.end_time = new Date(bookingData.end_time);
     
-    const booking = await createBooking(bookingData);
-    console.log("Booking created")
+    const booking = createBooking(bookingData);
     addBookingIdToListing(listingId, booking._id);
     addBookingIdToUser(booking._id, renterId, "renter");
     addBookingIdToUser(booking._id, hostId, "host");
-    console.log("Id created")
-    updateAvailability(listingId, bookingData);   
+    updateAvailability(listingId, bookingData);
+    return booking;
 }
 
 // module.exports = {createUser, queryUser, removeUser, updateUser, addBookingIdToUser, createListing, queryListing, addBookingIdToListing, updateAvailability, addBooking};

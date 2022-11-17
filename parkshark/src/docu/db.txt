@@ -30,6 +30,7 @@ How is HTTP request authenticated?
 REST API
 -Create: POST /users
 -Read: GET /users?email=string 
+    params: email
 -Read: GET /users/:id
 -Update: PATCH /users/:id
 -Delete: DELETE /users/:id
@@ -38,12 +39,18 @@ REST API
 
 -Create: POST /listings
 -Read: GET /listings?long=dec&lat=dec&host_id=string&price_lo=dec&price_hi=dec&starttime=t1&endtime=t2&limit=int&skip=int
+    params: long, lat (for search by location)
+            host_id
+            price_lo, price_hi (for search by pricing)
+            starttime, endtime (for search by availability)
+            limit, skip (for pagination)
 -Read: GET /listings/:id
 -Update: PATCH /listings/:id
 -Delete: DELETE /listings/:id
 
--Create: POST /bookings?renter_id=string&listing_id=string&host_id=string&starttime=t1&endtime=t2
+-Create: POST /bookings
 -Read: GET /bookings?renter_id=string&listing_id=string&host_id=string
+    params: renter_id, listing_id, host_id
 -Read: GET /bookings/:id
 -Update: PATCH /bookings/:id
 -Delete: DELETE /bookings/:id
