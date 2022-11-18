@@ -2,14 +2,14 @@ import './Home.css';
 import React, { useState } from 'react';
 import styled from "styled-components";
 import GoogleMapReact from 'google-map-react';
-import key from '../../keys.json';
+// import key from '../../keys.json';
 
 function MainContent2(){
   return(
     <MainPanel1>
           <div style={{ height: '80vh', width: '80%' }}>
             <GoogleMapReact
-              bootstrapURLKeys={{ key: key}}
+              bootstrapURLKeys={{ key: "AIzaSyD6R-IIfz_JpU-14dpkhXpv6O2jUlrCt2c"}}
               defaultCenter={defaultProps.center}
               defaultZoom={defaultProps.zoom}
             >

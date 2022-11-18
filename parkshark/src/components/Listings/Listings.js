@@ -27,6 +27,7 @@ class Listings extends Component {
   }
 
   async componentDidMount() {
+    this.getListings();
           this.setState({ spots: [{
             "id": "",
             "location": {
