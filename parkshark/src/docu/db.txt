@@ -1,6 +1,6 @@
-Collections: Listings, Users
+// TODO: sanitization, validation
 
-
+Collections: Listings, Users, Bookings
 
 Listings
 
@@ -9,57 +9,6 @@ Listings
 //2. Availability is decided on whether there is a current
 //3. All users are both renters and rentees
 //4. User can't edit bookings after they are made
-
-{
-   id:"",
-   location: {
-      type: "Point",
-      coordinates: [-73.856077, 40.848447]
-   },
-   userid: "",
-   address: {
-        state:"CA",
-        city:"Los Angeles",
-        postal_code:"90034",
-        line_1:"",
-        line_2:""
-   },
-   description:"",
-   image:<base64>,
-   price:10,
-   availability:[
-       time_interval:{
-       start_time:<timestamp>, 
-       end_time:<timestamp>
-     }
-   ],
-   bookings: [
-       booking: {
-       _id:"",
-       rentee_id:"",
-       starttime:"",
-       endtime:"",
-       createdAt:<timestamp>,
-       updatedAt:<timestamp>
-     }
-   ],
-   createdAt:<timestamp>,
-   updatedAt:<timestamp> 
-}
-
-Users
-
-{
-    _id: "",
-    name: "",
-    phone: "",
-    dob: "",
-    email: "",
-    address: "",
-    bookings_id: [],
-    listings_id: [],
-    
-}
 
 Case A:
 Availability is a boolean. Renter sets either available or not. Typical available listing search would look like: 
@@ -71,3 +20,41 @@ Case B:
 1. Each listing has its own availability calendar (array of time intervals).
 2. Each time a booking is made the availability calendar is updated
 3. Simply filter to see if requested time interval intersects with existing bookings
+
+
+// *************************
+Note:
+Does front-end need to look at ObjectIds?
+How is HTTP request authenticated?
+
+REST API
+-Create: POST /users
+-Read: GET /users?email=string 
+    params: email
+-Read: GET /users/:id
+-Update: PATCH /users/:id
+-Delete: DELETE /users/:id
+
+    > User wants to get renter bookings/host bookings/listings by ID
+
+-Create: POST /listings
+-Read: GET /listings?long=dec&lat=dec&host_id=string&price_lo=dec&price_hi=dec&starttime=t1&endtime=t2&limit=int&skip=int
+    params: long, lat (for search by location)
+            host_id
+            price_lo, price_hi (for search by pricing)
+            starttime, endtime (for search by availability)
+            limit, skip (for pagination)
+-Read: GET /listings/:id
+-Update: PATCH /listings/:id
+-Delete: DELETE /listings/:id
+
+-Create: POST /bookings
+-Read: GET /bookings?renter_id=string&listing_id=string&host_id=string
+    params: renter_id, listing_id, host_id
+-Read: GET /bookings/:id
+-Update: PATCH /bookings/:id
+-Delete: DELETE /bookings/:id
+
+    > Creating a booking means updating host, renter and listing documents
+
+* request contains headers and JSON data in request body
