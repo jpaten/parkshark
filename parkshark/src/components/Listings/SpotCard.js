@@ -13,7 +13,7 @@ const ResultCard = styled(Card)(({ theme }) => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     width: "300px",
-    height: '450px',
+    height: '500px',
     position: 'relative',
     backgroundColor: 'rgb(245,245,250)'
 }))
@@ -23,10 +23,16 @@ const SpotCard = ({result}) => {
         <Grid item xs={12} sm={6} md={4}>
             <ResultCard>
                 <CardActionArea>
-                    <CardMedia component="img" height="294" image={result.image} alt="Property Image" />
+                    <CardMedia component="img" height="294" image={"https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1600"} alt="Property Image" />
                     <CardContent height="200px">
                         <Typography gutterBottom variant="subtitle1" component="div" textAlign="left">
                             {result.address.city}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" textAlign="left">
+                            {result.address.line_1}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" textAlign="left">
+                            {result.address.line_2}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" textAlign="left">
                             {result.description}
