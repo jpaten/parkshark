@@ -26,8 +26,15 @@ class Listings extends Component {
     };
   }
 
+  getListings(){
+    fetch("http://localhost:5000/listings")
+    .then(res => console.log(res))
+    .then(res => console.log(res))
+  }
+
   async componentDidMount() {
-    this.getListings();
+      alert("u")
+      this.getListings();
           this.setState({ spots: [{
             "id": "",
             "location": {
@@ -692,6 +699,7 @@ class Listings extends Component {
   }
 
   render() {
+    console.log("hi")
     if (this.state.spots.length > 0)
       return (
           <Box mt={2} sx={{ flexGrow: 1 }} >

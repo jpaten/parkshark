@@ -124,7 +124,7 @@ function updateAvailability(listingId, bookingData){
             }
         }
 
-        if(availIdx < 0){
+        if (availIdx < 0){
             console.log("Availability not updated");
             
         } else{
@@ -171,4 +171,4 @@ function addBooking(bookingData) {
 }
 
 // module.exports = {createUser, queryUser, removeUser, updateUser, addBookingIdToUser, createListing, queryListing, addBookingIdToListing, updateAvailability, addBooking};
-module.exports = {addBookingIdToUser, addBookingIdToListing, updateAvailability, addBooking};
+module.exports = {queryListing, addBookingIdToUser, addBookingIdToListing, updateAvailability, addBooking};

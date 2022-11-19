@@ -10,7 +10,7 @@ const bookingRouter = require('./routers/booking')
 // require("./db/mongodb")  // ensures mongoose connects to the db
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 
 app.use(express.json())
 app.use(userRouter)
