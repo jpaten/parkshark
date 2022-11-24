@@ -3,20 +3,22 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import GoogleMapReact from 'google-map-react';
 import key from '../../keys.json';
+import Marker from './Marker.tsx';
 
 function MainContent2(){
   return(
     <MainPanel1>
           <div style={{ height: '80vh', width: '80%' }}>
             <GoogleMapReact
-              bootstrapURLKeys={{ key: key}}
+              bootstrapURLKeys={{ key: "AIzaSyD6R-IIfz_JpU-14dpkhXpv6O2jUlrCt2c"}}
               defaultCenter={defaultProps.center}
               defaultZoom={defaultProps.zoom}
             >
-              <AnyReactComponent
-                lat={59.955413}
-                lng={30.337844}
-                text="My Marker"
+              <Marker
+                lat={34.05}
+                lng={241.615}
+                name="My Marker"
+                color="red"
               />
             </GoogleMapReact>
           </div>
