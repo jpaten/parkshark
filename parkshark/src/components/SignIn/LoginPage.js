@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
 import fire from './fire';
+import Cookies from "js-cookie";
 import 'firebase/auth';
 import Login from './Login';
 import Home from "../Home/Home";
@@ -49,6 +50,8 @@ function LoginPage() {
           default: break;
         }
       });
+
+
   };
 
   const handleSignup = () => {
@@ -68,6 +71,26 @@ function LoginPage() {
         }
       });
   };
+
+  let dob = new Date();
+  dob.setTime(Date.now());
+  let userObject = {
+    name: user,
+    phone: "555-223-4332",
+    dob: dob,
+    email: emailError,
+    host_bookings_id: [],
+    renter_bookings_id: [],
+    listings_id: [],
+  }
+  /*fetch("URL", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userObject),
+  })
+      .then(response => response.json())
+      .then(data => Cookies.set("userID", data.user)); //TODO: not sure how to get USER ID*/
+
 
   const handleLogout = () => {
     fire.auth().signOut();
@@ -96,7 +119,7 @@ function LoginPage() {
       <div className="App">
         <Router>
         {/* <Navbar loggedIn={fire.auth().currentUser} /> */}
-        <Navbar2></Navbar2>
+        <Navbar2/>
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/Home" component={Home} />

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import GoogleMapReact from 'google-map-react';
 import key from '../../keys.json';
-import Marker from './Marker.tsx';
 
 function MainContent2(){
   return(

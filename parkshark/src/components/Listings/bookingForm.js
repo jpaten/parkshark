@@ -1,10 +1,10 @@
 import {useState} from "react";
 import Calendar from "react-calendar";
 import './calendar.css'
-import {value} from "firebase-tools/lib/deploymentTool";
 //import {createBooking} from "../../utils/mongodb";
-import {TextField} from "@mui/material";
+import {Container, TextField} from "@mui/material";
 //import {createBooking} from "../../utils/mongodb";
+import Cookies from "js-cookie";
 
 
 const LISTING_NAME = "907 Westwood Blvd";
@@ -22,7 +22,9 @@ export function BookingForm({listingName}) {
     const [departureDate, setDepartureDate] = useState(new Date());
     const [departureTime, setDepartureTime] = useState("");
     const [notes, setNotes] = useState("");
+    const [hasSubmitted, setHasSubmitted] = useState("");
     const [hasBooked, setHasBooked] = useState(false);
+
 
     const isAvailable = (dateInfo) => {
         for (let i = 0; i < AVAILABLE.length; i++){
@@ -42,8 +44,9 @@ export function BookingForm({listingName}) {
         departureDate.setHours(parseInt(splitDepartureTime[0]));
         departureDate.setMinutes(parseInt(splitDepartureTime[1]));
         console.log(arrivalDate);
-        /*createBooking({
-            renter_id: USER_ID,
+
+        let newBooking = {
+            renter_id: Cookies.get("userID"),
             listing_id: LISTING_ID,
             rentee_id: LANDLORD_ID,
             time_interval: {
@@ -52,7 +55,14 @@ export function BookingForm({listingName}) {
             },
             createdAt: Date.now(),
             updatedAt: Date.now()
-        })*/
+        };
+
+        /*fetch("URL", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newBooking),
+        });//ADD ERROR RESPONSE*/
+
         setHasBooked(true);
     }
 
@@ -67,6 +77,7 @@ export function BookingForm({listingName}) {
                             onChange={(event) => setName(event.target.value)}/>
                     </label>
                     <label>
+                        <Container>
                         <p>Date</p>
                         <Calendar
                             onChange={(value) => {
@@ -76,6 +87,7 @@ export function BookingForm({listingName}) {
                             tileDisabled={isAvailable}
                             selectRange={true}
                         />
+                        </Container>
                     </label>
                     <label>
                         <p>Arrival Time</p>
@@ -104,8 +116,9 @@ export function BookingForm({listingName}) {
     }
     else{
         return(
-            <div>
-                <h1>Thanks for booking {listingName}!</h1>
+            <div>j
+                <h1>Thanks for booking {listingName}! You have the spot from {new Intl.DateTimeFormat("en-US", {month: "long"}).format(arrivalDate)} {arrivalDate.getDay()} at {arrivalDate.toLocaleTimeString()} to {new Intl.DateTimeFormat("en-US", {month: "long"}).format(departureDate)} {departureDate.getDay()} at {departureDate.toLocaleTimeString()}</h1>
+                <button onClick={() => setHasBooked(false)}>Cancel</button>
             </div>
         );
     }
