@@ -10,7 +10,7 @@ function MainContent2(){
     <MainPanel1>
           <div style={{ height: '80vh', width: '80%' }}>
             <GoogleMapReact
-              bootstrapURLKeys={{ key: "AIzaSyD6R-IIfz_JpU-14dpkhXpv6O2jUlrCt2c"}}
+              bootstrapURLKeys={{ key: key}}
               defaultCenter={defaultProps.center}
               defaultZoom={defaultProps.zoom}
             >
