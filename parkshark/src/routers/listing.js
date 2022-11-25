@@ -16,6 +16,7 @@ router.post('/listings', async (req, res) => {
 // (R) GET listings /listings?long=dec&lat=dec&host_id=string&price_lo=dec&price_hi=dec&starttime=t1&endtime=t2&limit=l&skip=s
 // Filter listings by location (long, lat), time availability, host (?), price range
 // ?limit=10&skip=10
+// PRECONDITION: Requests must have starttime and endtime populated
 router.get('/listings', async (req, res) => {
     const match = {}
     const METERS_PER_MILE = 1609.34
@@ -51,10 +52,16 @@ router.get('/listings', async (req, res) => {
         }
     }
     
-    const starttime = req.query.starttime
-    const endtime = req.query.endtime
-    // TODO: search function for time availability
-
+    const req_start = req.query.starttime
+    const req_end = req.query.endtime
+    match.availability = {
+        $elemMatch : {
+            $and: [
+                { start_time: { $lte: Date(req_start)} },
+                { end_time: { $gte: Date(req_end)}}
+            ]
+          }
+    }
     try {
         const listings = await Listing.find(
             match,
