@@ -20,8 +20,11 @@ router.post('/listings', async (req, res) => {
 router.get('/listings', async (req, res) => {
     const match = {}
     const METERS_PER_MILE = 1609.34
-    const maxDistInMiles = 5
+    var maxDistInMiles = 5
     if (req.query.long && req.query.lat) {
+        if (req.query.max_dist) {
+            maxDistInMiles = req.query.max_dist
+        }
         // returns listings ordered by nearest to long, lat
         match.location = {$nearSphere: {
             $geometry: {
@@ -51,17 +54,19 @@ router.get('/listings', async (req, res) => {
             match.price = { '$lte': price_hi }
         }
     }
-    
-    const req_start = req.query.starttime
-    const req_end = req.query.endtime
-    match.availability = {
-        $elemMatch : {
-            $and: [
-                { start_time: { $lte: Date(req_start)} },
-                { end_time: { $gte: Date(req_end)}}
-            ]
-          }
+    if (req.query.starttime && req.query.endtime) {
+        const req_start = new Date(req.query.starttime)
+        const req_end = new Date(req.query.endtime)
+        match.availability = {
+            $elemMatch : {
+                $and: [
+                    { start_time: { $lte: req_start} },
+                    { end_time: { $gte: req_end} }
+                ]
+            }
+        }
     }
+
     try {
         const listings = await Listing.find(
             match,
