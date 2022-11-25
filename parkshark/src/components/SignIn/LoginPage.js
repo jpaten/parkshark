@@ -1,19 +1,21 @@
 import React, {useState, useEffect} from "react";
 import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
 import fire from './fire';
-import 'firebase/auth'
+import Cookies from "js-cookie";
+import 'firebase/auth';
 import Login from './Login';
-import Home from '../Home/Home'
-import Navbar from '../Navbar/Navbar';
+import Home from "../Home/Home";
+import Listings from '../Listings/Listings';
+import ListingPage from "../Listings/listingPage"
 import Profile from "../Profile/Profile";
-import About from "../About/About"
+import About from "../About/About";
 import Navbar2 from "../Navbar/Navbar2";
 import './LoginPage.css';
 function LoginPage() {
 
   //set up the initial states//
-  const[user, setUser] = useState(''); 
-  const[email, setEmail] = useState(''); 
+  const[user, setUser] = useState('');
+  const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
   const[emailError, setEmailError] = useState('');
   const[passwordError, setPasswordError] = useState('');
@@ -41,12 +43,15 @@ function LoginPage() {
           case "auth/user-disabled":
           case "auth/user-not-found":
             setEmailError(err.message);
+            break;
           case "auth/wrong-password":
             setPasswordError(err.message);
             break;
           default: break;
         }
       });
+
+
   };
 
   const handleSignup = () => {
@@ -66,6 +71,26 @@ function LoginPage() {
         }
       });
   };
+
+  let dob = new Date();
+  dob.setTime(Date.now());
+  let userObject = {
+    name: user,
+    phone: "555-223-4332",
+    dob: dob,
+    email: emailError,
+    host_bookings_id: [],
+    renter_bookings_id: [],
+    listings_id: [],
+  }
+  /*fetch("URL", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userObject),
+  })
+      .then(response => response.json())
+      .then(data => Cookies.set("userID", data.user)); //TODO: not sure how to get USER ID*/
+
 
   const handleLogout = () => {
     fire.auth().signOut();
@@ -91,20 +116,22 @@ function LoginPage() {
   return (
     <div className="LoginPage">
       {user ? (
-            
       <div className="App">
         <Router>
         {/* <Navbar loggedIn={fire.auth().currentUser} /> */}
-        <Navbar2></Navbar2>
+        <Navbar2/>
           <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/Home" component={Home} />
             <Route path="/Login" component={LoginPage} />
+            <Route path="/Listings" component={Listings} />
+            <Route path="/Listing" component={ListingPage}/>
             <Route path="/About" component={About} />
             <Route path="/Profile" component={Profile} />
           </Switch>
         </Router>
       </div>
-    
+
       ): (
         <Login //with all possible states
         email={email}
@@ -119,10 +146,41 @@ function LoginPage() {
         passwordError={passwordError}
       />
       )}
-
-
     </div>
   );
 }
 
 export default LoginPage;
+
+/*<div className="LoginPage">
+      {user ? (
+      <div className="App">
+        <Router>
+        {/* <Navbar loggedIn={fire.auth().currentUser} /> }
+        <Navbar2></Navbar2>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/Home" component={Home} />
+            <Route path="/Login" component={LoginPage} />
+            <Route path="/Listings" component={Listings} />
+            <Route path="/About" component={About} />
+            <Route path="/Profile" component={Profile} />
+          </Switch>
+        </Router>
+      </div>
+
+      ): (
+        <Login //with all possible states
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        handleLogin={handleLogin}
+        handleSignup={handleSignup}
+        hasAccount={hasAccount}
+        setHasAccount={setHasAccount}
+        emailError={emailError}
+        passwordError={passwordError}
+      />
+      )}
+    </div> */

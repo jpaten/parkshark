@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { css } from "styled-components";
+import carImg from "./parked.jpg";
+import carOutline from "./yellowCarOutline.png";
 import './About.css';
 
 export const PoppinsBoldWhite64px = css`
@@ -87,9 +89,9 @@ const ASmarterWayForDueDiligence = styled.div`
 
 const Vector1 = styled.img`
   position: absolute;
-  width: 363px;
-  height: 56px;
-  top: 290px;
+  width: 373px;
+  height: 130px;
+  top: 270px;
   left: 0;
 `;
 
@@ -155,7 +157,7 @@ const Founders = styled.div`
 `;
 
 const FrameContainer = styled.div`
-  height: 93px;
+  height: 90px;
   position: relative;
   margin-top: 25px;
   display: flex;
@@ -181,18 +183,21 @@ const LoremIpsumDolorSi1 = styled.div`
   width: 387px;
   top: 87px;
   left: 97px;
+  font-size: var(--font-size-l2);
   letter-spacing: 0;
 `;
 
 function Frame6(props) {
-  const { name, className } = props;
+  const { name1, name2, name3, className } = props;
 
   return (
     <Frame61 className={`frame-6 ${className || ""}`}>
       <Ellipse1 className="ellipse-1" src="https://anima-uploads.s3.amazonaws.com/projects/628530bfce435c86033077a0/releases/6297bef0cb2f020cb95ef378/img/ellipse-1-1@2x.svg" />
       <OverlapGroup className="overlap-group">
         <Name className="name">
-          {name}
+          {name1}
+          {name2}
+          {name3}
         </Name>
         <UCLA className="ucla">
           UCLA
@@ -229,6 +234,7 @@ const Ellipse1 = styled.img`
 const OverlapGroup = styled.div`
   width: 200px;
   height: 51px;
+  align-items: center;
   position: relative;
   margin-top: 2px;
 `;
@@ -260,27 +266,31 @@ class About extends React.Component {
       <div className="about1">
         <FlexRow1>
           <OverlapGroup2>
-            <Title>We make your stock trades better</Title>
-            <ASmarterWayForDueDiligence>A SMARTER WAY FOR DUE DILIGENCE</ASmarterWayForDueDiligence>
-            <Vector1 src="https://anima-uploads.s3.amazonaws.com/projects/628530bfce435c86033077a0/releases/6297bef0cb2f020cb95ef378/img/vector-1@2x.svg" />
+            <Title>We make traveling easier</Title>
+            <ASmarterWayForDueDiligence>A SMARTER WAY FOR TRIP PLANNING</ASmarterWayForDueDiligence>
+            <Vector1 src={carOutline} />
           </OverlapGroup2>
-          <UnsplashDesign src= "https://anima-uploads.s3.amazonaws.com/projects/628530bfce435c86033077a0/releases/6297bef0cb2f020cb95ef378/img/unsplash-design@1x.png" />
+          <UnsplashDesign src={carImg}/>
         </FlexRow1>
         <OverlapGroup3>
           <Rectangle1></Rectangle1>
           <Rectangle3></Rectangle3>
           <CubeDesign>
             <Founders>FOUNDERS</Founders>
-            <FrameContainer>
-              <Frame6 name="Warren Wallis" />
-              <Frame6 name="Drake Cote" className="frame-7" />
-            </FrameContainer>
+            <div className="member-box">
+              <p className="members">Drake Cote</p>
+              <p className="members">Sai</p>
+              <p className="members">Tay</p>
+              <p className="members">Jonah</p>
+              <p className="members">Brian</p>
+              <p className="members">Ben</p> 
+            </div>
           </CubeDesign>
           <LoremIpsumDolorSi>
-             We are two Software Engineers who originally started on this idea as a class project, but have turned it into our full time focus. We created this website for users such as ourselves upon starting our research: those who have some money and don't know how or when to invest to maximize their earnings. 
+             We are a group of engineers who did this project for our CS 130 class at UCLA, but it is also a good venture idea. Many businesses like Airbnb, Uber, and Lyft started on a very similar personalized booking application.
           </LoremIpsumDolorSi>
           <LoremIpsumDolorSi1>
-            The goal of our organization is to provide a viable way for people to invest wisely in the stock market without having to spend as much time as day traders and stock brokers on wall street researching every company.
+            The goal of our organization is to provide a viable way for people to list and book parking spaces for both commercial or personal use. 
           </LoremIpsumDolorSi1>
         </OverlapGroup3>
       </div>
