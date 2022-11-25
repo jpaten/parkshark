@@ -22,7 +22,7 @@ router.get('/users', async (req, res) => {
         match.email = req.query.email
     }
     try {
-        const users = await User.find({ match })
+        const users = await User.find(match)
         res.send(users)
     } catch (e) {
         res.status(500).send(e)
