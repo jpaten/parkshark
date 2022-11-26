@@ -83,7 +83,7 @@ function LoginPage() {
     renter_bookings_id: [],
     listings_id: [],
   }
-  /*fetch("URL", {
+  /*fetch("/users", {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userObject),
