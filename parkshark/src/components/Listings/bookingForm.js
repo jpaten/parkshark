@@ -1,10 +1,11 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Calendar from "react-calendar";
 import './calendar.css'
 //import {createBooking} from "../../utils/mongodb";
 import {Container, TextField} from "@mui/material";
 //import {createBooking} from "../../utils/mongodb";
 import Cookies from "js-cookie";
+import {useParams} from "react-router-dom";
 
 
 const LISTING_NAME = "907 Westwood Blvd";
@@ -16,19 +17,37 @@ const LANDLORD_ID = 2;
 
 export function BookingForm({listingName}) {
 
+    let availability = [];
+
     const [name, setName] = useState(listingName);
     const [arrivalDate, setArrivalDate] = useState(new Date());
     const [arrivalTime, setArrivalTime] = useState("");
     const [departureDate, setDepartureDate] = useState(new Date());
     const [departureTime, setDepartureTime] = useState("");
     const [notes, setNotes] = useState("");
-    const [hasSubmitted, setHasSubmitted] = useState("");
+    const [hasSubmitted, setHasSubmitted] = useState(false);
     const [hasBooked, setHasBooked] = useState(false);
 
+    const {id} = useParams();
+
+    useEffect(() => {
+        fetch( `/listings/${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                for(let datePair in data.availability){
+                    let startDate = new Date(data.availability[datePair].start_time);
+                    let endDate = new Date(data.availability[datePair].end_time);
+                    availability.push([startDate, endDate])
+                }
+            });
+        console.log(availability);
+
+
+    })
 
     const isAvailable = (dateInfo) => {
-        for (let i = 0; i < AVAILABLE.length; i++){
-            if (AVAILABLE[i][0] <= dateInfo.date && dateInfo.date <= AVAILABLE[i][1]){
+        for (let i = 0; i < availability.length; i++){
+            if (availability[i][0] <= dateInfo.date && dateInfo.date <= availability[i][1]){
                 return 0;
             }
         }
@@ -37,6 +56,11 @@ export function BookingForm({listingName}) {
     }
 
     const submitBooking = () => {
+        if(name === "" || isNaN(arrivalDate.getDay()) || isNaN(departureDate.getDay()) || ( arrivalDate > departureDate)){
+            // BAD SUBMISSION
+            setHasSubmitted(true)
+            return;
+        }
         let splitArrivalTime = arrivalTime.split(":");
         arrivalDate.setHours(parseInt(splitArrivalTime[0]));
         arrivalDate.setMinutes(parseInt(splitArrivalTime[1]));
@@ -57,11 +81,13 @@ export function BookingForm({listingName}) {
             updatedAt: Date.now()
         };
 
-        /*fetch("URL", {
+        fetch("/users", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newBooking),
-        });//ADD ERROR RESPONSE*/
+        })
+            .then((response) => response.json())
+            .then((data) => console.log(data)); // HANDLE ERRORS
 
         setHasBooked(true);
     }
@@ -116,7 +142,7 @@ export function BookingForm({listingName}) {
     }
     else{
         return(
-            <div>j
+            <div>
                 <h1>Thanks for booking {listingName}! You have the spot from {new Intl.DateTimeFormat("en-US", {month: "long"}).format(arrivalDate)} {arrivalDate.getDay()} at {arrivalDate.toLocaleTimeString()} to {new Intl.DateTimeFormat("en-US", {month: "long"}).format(departureDate)} {departureDate.getDay()} at {departureDate.toLocaleTimeString()}</h1>
                 <button onClick={() => setHasBooked(false)}>Cancel</button>
             </div>

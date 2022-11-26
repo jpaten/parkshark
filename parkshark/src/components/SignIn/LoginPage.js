@@ -125,7 +125,7 @@ function LoginPage() {
             <Route path="/Home" component={Home} />
             <Route path="/Login" component={LoginPage} />
             <Route path="/Listings" component={Listings} />
-            <Route path="/Listing" component={ListingPage}/>
+            <Route path="/Listing/:id" component={ListingPage}/>
             <Route path="/About" component={About} />
             <Route path="/Profile" component={Profile} />
           </Switch>
