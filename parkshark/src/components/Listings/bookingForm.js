@@ -8,18 +8,17 @@ import Cookies from "js-cookie";
 import {useParams} from "react-router-dom";
 
 
-const LISTING_NAME = "907 Westwood Blvd";
-const AVAILABLE = [[new Date(2022, 10, 3,), new Date(2022,10,4)]];
 
-const USER_ID = 10;
+const USER_ID = "6361cd507f98f5c0249b249a";
 const LISTING_ID = 2;
 const LANDLORD_ID = 2;
 
-export function BookingForm({listingName}) {
+export function BookingForm() {
 
-    let availability = [];
 
-    const [name, setName] = useState(listingName);
+    let [availability, setAvailability] = useState([]);
+
+    const [name, setName] = useState("");
     const [arrivalDate, setArrivalDate] = useState(new Date());
     const [arrivalTime, setArrivalTime] = useState("");
     const [departureDate, setDepartureDate] = useState(new Date());
@@ -29,25 +28,28 @@ export function BookingForm({listingName}) {
     const [hasBooked, setHasBooked] = useState(false);
 
     const {id} = useParams();
+    let [listingUserId, setListingUserId] = useState("");
 
-    useEffect(() => {
-        fetch( `/listings/${id}`)
-            .then((response) => response.json())
-            .then((data) => {
-                for(let datePair in data.availability){
-                    let startDate = new Date(data.availability[datePair].start_time);
-                    let endDate = new Date(data.availability[datePair].end_time);
-                    availability.push([startDate, endDate])
-                }
-            });
+   useEffect(() => {
+            fetch(`/listings/${id}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    const newAvailability = [];
+                    for (let datePair in data.availability) {
+                        let startDate = new Date(data.availability[datePair].start_time);
+                        let endDate = new Date(data.availability[datePair].end_time);
+                        newAvailability.push([startDate, endDate])
+                    }
+                    setAvailability(newAvailability);
+                    //setListingUserId(data.userid);
+                });
+   }, []);
+
+
+    const isAvailable = ({activeStartDate, date, view}) => {
         console.log(availability);
-
-
-    })
-
-    const isAvailable = (dateInfo) => {
         for (let i = 0; i < availability.length; i++){
-            if (availability[i][0] <= dateInfo.date && dateInfo.date <= availability[i][1]){
+            if (availability[i][0] <= date && date <= availability[i][1]){
                 return 0;
             }
         }
@@ -67,48 +69,43 @@ export function BookingForm({listingName}) {
         let splitDepartureTime = departureTime.split(":");
         departureDate.setHours(parseInt(splitDepartureTime[0]));
         departureDate.setMinutes(parseInt(splitDepartureTime[1]));
-        console.log(arrivalDate);
 
         let newBooking = {
-            renter_id: Cookies.get("userID"),
-            listing_id: LISTING_ID,
-            rentee_id: LANDLORD_ID,
-            time_interval: {
-                starttime: arrivalDate,
-                endtime: departureDate,
-            },
-            createdAt: Date.now(),
-            updatedAt: Date.now()
+            renter_id: id,
+            host_id: "636488383f7d443468218b01",
+            listing_id: id,
+            start_time: arrivalDate,
+            end_time: departureDate,
         };
 
-        fetch("/users", {
+        fetch("/bookings", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newBooking),
         })
             .then((response) => response.json())
-            .then((data) => console.log(data)); // HANDLE ERRORS
+            .then((data) => {
+                console.log(data);
+                setHasSubmitted(true);
+                setHasBooked(true);
 
-        setHasBooked(true);
+                }
+            );// HANDLE ERRORS
+
     }
 
     if(!hasBooked) {
         return (
             <div className={"booking-form-container"}>
+                <h1>Let's book {listingUserId[0]}</h1>
                 <form onSubmit={submitBooking}>
-                    <label>
-                        <p>Your Name</p>
-                        <TextField
-                            name={"name"}
-                            onChange={(event) => setName(event.target.value)}/>
-                    </label>
                     <label>
                         <Container>
                         <p>Date</p>
                         <Calendar
                             onChange={(value) => {
-                                setArrivalDate(value[0]);
-                                setDepartureDate(value[0]);
+                                setArrivalDate(value);
+                                setDepartureDate(value);
                             }}
                             tileDisabled={isAvailable}
                             selectRange={true}
@@ -143,7 +140,7 @@ export function BookingForm({listingName}) {
     else{
         return(
             <div>
-                <h1>Thanks for booking {listingName}! You have the spot from {new Intl.DateTimeFormat("en-US", {month: "long"}).format(arrivalDate)} {arrivalDate.getDay()} at {arrivalDate.toLocaleTimeString()} to {new Intl.DateTimeFormat("en-US", {month: "long"}).format(departureDate)} {departureDate.getDay()} at {departureDate.toLocaleTimeString()}</h1>
+                <h1>Thanks for booking! You have the spot from {new Intl.DateTimeFormat("en-US", {month: "long"}).format(arrivalDate)} {arrivalDate.getDay()} at {arrivalDate.toLocaleTimeString()} to {new Intl.DateTimeFormat("en-US", {month: "long"}).format(departureDate)} {departureDate.getDay()} at {departureDate.toLocaleTimeString()}</h1>
                 <button onClick={() => setHasBooked(false)}>Cancel</button>
             </div>
         );
