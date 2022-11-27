@@ -24,14 +24,19 @@ class Bookings extends React.Component {
             .catch(e => console.log(e));
     }
     render() {
+      let link = "http://localhost:3000/listing/" + this.state.listing_id;
       return (
         <div>
           <Box mt={3} sx={{ flexGrow: 1 }} >
-            <Grid xs={0} sm={2}></Grid>
-            <div className='filter' style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: "15px"}}>
-                <Typography variant="title" color="text.primary" textAlign="left">
-                  Bookings for listing {this.state.listing_id}
-                </Typography>
+          <a href={link}>
+                  <button >
+                      Return to Booking form
+                  </button>
+                </a>
+            <div className='filter' style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: "20px", marginTop: "15px"}}>
+              <Typography variant="title" color="text.primary">
+                Bookings for listing {this.state.listing_id}
+              </Typography>
             </div>
             <Grid className= "grid" container spacing={5} alignItems="center" justifyContent="center" >
               {this.state.booking_ids.map((booking) => {

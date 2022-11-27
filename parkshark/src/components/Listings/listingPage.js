@@ -24,7 +24,7 @@ export function ListingPage() {
 
     return (
         <div>
-            <BookingForm/>
+            <BookingForm listid = {id}/>
         </div>
 
     );
