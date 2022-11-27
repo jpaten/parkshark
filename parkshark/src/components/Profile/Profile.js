@@ -202,6 +202,7 @@ class Profile extends React.Component {
 						/>
 					</div>
 				</form>
+				<Box sx={{ m: "1rem" }} />
 				<button onClick={this.updatePassword}>Change Password</button>
 			</div>
 		);
@@ -232,8 +233,16 @@ class Profile extends React.Component {
 	DeleteAccountForm() {
 		return (
 			<div>
-				<h3>Delete Acount:</h3>
-				<button onClick={this.toggleDeleteModal}>DELETE ACCOUNT</button>
+				<h3>DELETE ACCOUNT</h3>
+				<Box sx={{ m: "1rem" }} />
+				<p>
+					Deleting your account will cause previously stored information about
+					bookings and listings to be removed. This action cannot be undone.
+				</p>
+				<Box sx={{ m: "1rem" }} />
+				<button className="redButton" onClick={this.toggleDeleteModal}>
+					DELETE ACCOUNT
+				</button>
 				<Modal
 					isOpen={this.state.requestDelete}
 					// onAfterOpen={afterOpenModal}
@@ -258,7 +267,9 @@ class Profile extends React.Component {
 							/>
 						</div>
 					</form>
-					<button onClick={this.deleteAccount}>Confirm Delete</button>
+					<button className="redButton" onClick={this.deleteAccount}>
+						Confirm Delete
+					</button>
 				</Modal>
 			</div>
 		);
@@ -275,8 +286,10 @@ class Profile extends React.Component {
 				</p>
 				<this.currentInfo user={user} />
 				<Box sx={{ m: "2rem" }} />
-				<h3>Change Password:</h3>
+				<h3>Change Password</h3>
+				<Box sx={{ m: "0.5rem" }} />
 				<this.CurrentPasswordForm />
+				<Box sx={{ m: "1rem" }} />
 				<this.ChangePasswordForm />
 				<Box sx={{ m: "2rem" }} />
 				<this.DeleteAccountForm />
