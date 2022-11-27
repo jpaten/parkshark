@@ -26,13 +26,10 @@ const SpotCard = ({result}) => {
                     <CardMedia component="img" height="294" image={result.image} alt="Property Image" />
                     <CardContent height="200px">
                         <Typography gutterBottom variant="subtitle1" component="div" textAlign="left">
-                            {result.address.city}
+                            {result.address.line_1}, {result.address.city}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" textAlign="left">
                             {result.description}
-                        </Typography>
-                        <Typography variant="body2" color="text.primary" textAlign="left">
-                        {new Date(result.availability[0].start_time*1000).toLocaleDateString('en-US', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })} - {new Date(result.availability[0].end_time*1000).toLocaleDateString('en-US', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
