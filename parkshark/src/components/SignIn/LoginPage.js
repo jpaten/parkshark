@@ -11,6 +11,7 @@ import Profile from "../Profile/Profile";
 import About from "../About/About";
 import Navbar2 from "../Navbar/Navbar2";
 import './LoginPage.css';
+import NewListing from "../Listings/newListingForm";
 function LoginPage() {
 
   //set up the initial states//
@@ -54,11 +55,27 @@ function LoginPage() {
 
   };
 
+  const createUser = (user) => {
+    const body = {
+      email: user.email,
+      host_bookings_id: [],
+      renter_bookings_id: [],
+      listings_id: []
+    }
+    fetch("users/",
+            {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(body)
+            })
+  }
+
   const handleSignup = () => {
     clearErrors();
     fire
       .auth()
       .createUserWithEmailAndPassword(email,password)
+      .then(user_cred => {createUser(user_cred.user)})
       .catch(err => {
         switch(err.code){
           case "auth/email-already-in-use":
@@ -83,7 +100,7 @@ function LoginPage() {
     renter_bookings_id: [],
     listings_id: [],
   }
-  /*fetch("URL", {
+  /*fetch("/users", {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userObject),
@@ -125,7 +142,8 @@ function LoginPage() {
             <Route path="/Home" component={Home} />
             <Route path="/Login" component={LoginPage} />
             <Route path="/Listings" component={Listings} />
-            <Route path="/Listing" component={ListingPage}/>
+            <Route path="/Listing/:id" component={ListingPage}/>
+            <Route path="/New" component={NewListing}/>
             <Route path="/About" component={About} />
             <Route path="/Profile" component={Profile} />
           </Switch>
