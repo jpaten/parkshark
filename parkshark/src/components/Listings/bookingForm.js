@@ -6,7 +6,6 @@ import Cookies from "js-cookie";
 import {useParams} from "react-router-dom";
 import fire from "../SignIn/fire";
 
-const USER_ID = "6361cd507f98f5c0249b249a";
 
 export function BookingForm() {
 
@@ -65,7 +64,7 @@ export function BookingForm() {
 
     useEffect( () => {
         // Check if current user has a booking
-        fetch(`/users/${USER_ID}`)
+        fetch(`/users/${viewingUserId}`)
             .then((response) => response.json())
             .then((userData) => {
                 for(let checkId in userData.renter_bookings_id){
@@ -139,7 +138,7 @@ export function BookingForm() {
         else {
 
             let newBooking = {
-                renter_id: USER_ID,
+                renter_id: viewingUserId,
                 host_id: listingUserId,
                 listing_id: listingId,
                 start_time: arrivalDate,
