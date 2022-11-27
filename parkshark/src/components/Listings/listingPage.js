@@ -17,11 +17,11 @@ export function ListingPage() {
                 for(const i in data){
                     apiData[i] = data[i];
                 }
+                console.log(data);
             });
     }, []);
 
 
-    console.log(apiData);
     return (
         <div>
             <BookingForm/>
