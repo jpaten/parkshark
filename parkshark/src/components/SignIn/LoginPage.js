@@ -6,6 +6,7 @@ import 'firebase/auth';
 import Login from './Login';
 import Home from "../Home/Home";
 import Listings from '../Listings/Listings';
+import Bookings from '../Bookings/Bookings';
 import ListingPage from "../Listings/listingPage"
 import Profile from "../Profile/Profile";
 import About from "../About/About";
@@ -144,6 +145,7 @@ function LoginPage() {
             <Route path="/Home" component={Home} />
             <Route path="/Login" component={LoginPage} />
             <Route path="/Listings" component={Listings} />
+            <Route path="/Bookings/:id" component={Bookings} />
             <Route path="/Listing/:id" component={ListingPage}/>
             <Route path="/New" component={NewListing}/>
             <Route path="/About" component={About} />

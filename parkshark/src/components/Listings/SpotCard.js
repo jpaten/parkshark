@@ -18,16 +18,20 @@ const ResultCard = styled(Card)(({ theme }) => ({
     backgroundColor: 'rgb(245,245,250)'
 }))
 
+
 const SpotCard = ({result}) => {
+    let link = "http://localhost:3000/Bookings/" + result._id;
     return (
         <Grid item xs={12} sm={6} md={4}>
             <ResultCard>
-                <CardActionArea>
+                <CardActionArea href={link} >
                     <CardMedia component="img" height="294" image={result.image} alt="Property Image" />
                     <CardContent height="200px">
-                        <Typography gutterBottom variant="subtitle1" component="div" textAlign="left">
-                            {result.address.line_1}, {result.address.city}
-                        </Typography>
+                        {result.address != null
+                            ? <Typography gutterBottom variant="subtitle1" component="div" textAlign="left">
+                                {result.address.line_1}, {result.address.city}
+                            </Typography>
+                            :  <div/> }
                         <Typography variant="body2" color="text.secondary" textAlign="left">
                             {result.description}
                         </Typography>
