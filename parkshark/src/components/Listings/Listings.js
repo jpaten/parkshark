@@ -26,7 +26,7 @@ class Listings extends Component {
       endDate: second
     };
 
-    axios.get("listings")
+    axios.get("/listings")
       .then(res => {
         console.log(res.data);
         this.setState({ spots: res.data, filteredSpots: res.data});
@@ -82,11 +82,11 @@ class Listings extends Component {
                 label="First Day"
                 type="date"
                 defaultValue={this.state.startDate}
-                onChange={date => 
+                onChange={date =>
                   this.setState({
                     startDate: Date.parse(new Date(date.target.value)) / 1000
                   })}
-                InputLabelProps={{ shrink: true }} 
+                InputLabelProps={{ shrink: true }}
               />
               <TextField
 
