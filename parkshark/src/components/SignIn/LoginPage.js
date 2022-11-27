@@ -55,11 +55,27 @@ function LoginPage() {
 
   };
 
+  const createUser = (user) => {
+    const body = {
+      email: user.email,
+      host_bookings_id: [],
+      renter_bookings_id: [],
+      listings_id: []
+    }
+    fetch("users/",
+            {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(body)
+            })
+  }
+
   const handleSignup = () => {
     clearErrors();
     fire
       .auth()
       .createUserWithEmailAndPassword(email,password)
+      .then(user_cred => {createUser(user_cred.user)})
       .catch(err => {
         switch(err.code){
           case "auth/email-already-in-use":
