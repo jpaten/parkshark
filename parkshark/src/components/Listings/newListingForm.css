@@ -38,3 +38,8 @@
     text-align: center;
     min-width: 100%;
   }
+
+  .text-box{
+    font-size: 25;
+    padding-bottom: 10;
+  }

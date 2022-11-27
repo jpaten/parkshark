@@ -67,7 +67,7 @@ export function NewListing () {
         <MainPanel1>
             <MainPanel2>
                 <div style={{padding: 10}}>
-                    <p style={{fontSize: 25}}>Description</p>
+                    <p style={{padding:10, fontSize: 25}}>Description</p>
                     <TextField
                         name={"description"}
                         label={"Description"}
@@ -87,7 +87,7 @@ export function NewListing () {
                             selectRange={true}
                         />
                     </div>
-                    <p style={{fontSize: 25}}>Address</p>
+                    <p style={{padding:10, fontSize: 25}}>Address</p>
                     <TextField
                         label={"Line 1"}
                         placeholder={"415 Portola Plaza"}
