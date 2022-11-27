@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {TextField, Typography} from "@mui/material";
 import Calendar from "react-calendar";
+import {Redirect} from "react-router-dom";
 
 export function NewListing () {
     const [addressState, setAddressState] = useState("");
@@ -13,6 +14,9 @@ export function NewListing () {
 
     const [availabilityStartDate, setAvailabilityStartDate] = useState(new Date());
     const [availabilityEndDate, setAvailabilityEndDate] = useState(new Date());
+
+    const [newId, setNewId] = useState("");
+    const [doRedirect, setDoRedirect] = useState(false)
 
     const addListing = () => {
 
@@ -45,10 +49,18 @@ export function NewListing () {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(listingData),
             })
-            .then((response) => response.text())
-            .then((data) => console.log(data));
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data._id);
+                setNewId(data._id);
+                alert("Success! Redirecting you to your new spot!");
+                setDoRedirect(true);
+            });
     }
-
+    if(newId !== "undefined" && doRedirect){
+        console.log(newId);
+        return <Redirect to={`/listing/${newId}`}/>
+    }
     return (
         <div>
             <div>
