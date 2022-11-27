@@ -5,6 +5,8 @@ import {Redirect} from "react-router-dom";
 import styled from "styled-components";
 import "./newListingForm.css";
 
+const GOOGLE_KEY="test"
+
 export function NewListing () {
     const [addressState, setAddressState] = useState("");
     const [addressCity, setAddressCity] = useState("");
@@ -43,26 +45,47 @@ export function NewListing () {
                 ]
             }
         }
-
-
-        fetch("listings/",
-            {
-                method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(listingData),
+        const addressString = `${addressLine1} ${addressCity} ${addressState} ${addressPostalCode}`.replace(/ /g, "%20");
+        console.log(addressString)
+        const google_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressString + "&key=" + GOOGLE_KEY; 
+        fetch(google_url)
+            .then((googleResponse) => googleResponse.json())
+            .then((googleData) =>{
+                if(googleData.results.length === 0){
+                    alert("Invalid address, please try again");
+                } else{
+                    let newListing = listingData;
+                    const latitude = googleData.results[0].geometry.location.lat;
+                    const longitude = googleData.results[0].geometry.location.lat;
+                    newListing.location.coordinates = [longitude, latitude];
+                    return newListing;
+                }
             })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data._id);
-                setNewId(data._id);
-                alert("Success! Redirecting you to your new spot!");
-                setDoRedirect(true);
-            });
+            .then((augmentedListing) => {
+                console.log(augmentedListing);
+                fetch("listings/",
+                    {
+                        method: "POST",
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(augmentedListing),
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data);
+                        setNewId(data._id);
+                        alert("Success! Redirecting you to your new spot!");
+                        setDoRedirect(true);
+                    });
+            })
+
     }
+
+
     if(newId !== "undefined" && doRedirect){
         console.log(newId);
         return <Redirect to={`/listing/${newId}`}/>
     }
+
     return (
         <MainPanel1>
             <MainPanel2>
