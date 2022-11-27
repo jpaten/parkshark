@@ -5,14 +5,12 @@ import {Container, TextField} from "@mui/material";
 import Cookies from "js-cookie";
 import {useParams} from "react-router-dom";
 
-
-
 const USER_ID = "6361cd507f98f5c0249b249a";
 
 export function BookingForm() {
 
 
-    let [availability, setAvailability] = useState([]);
+    const [availability, setAvailability] = useState([]);
 
     const [arrivalDate, setArrivalDate] = useState(new Date());
     const [arrivalTime, setArrivalTime] = useState("");
@@ -21,8 +19,9 @@ export function BookingForm() {
     const [hasSubmitted, setHasSubmitted] = useState(false);
     const [hasBooked, setHasBooked] = useState(false);
 
-    const {id} = useParams();
-    let [bookingId, setBookingId] = useState("");
+    const {id: listingId} = useParams();
+    const [bookingId, setBookingId] = useState("");
+    const [allListingBookings, setAllListingBookings] = useState([])
 
     const [listingUserId, setListingUserId] = useState("");
     const [hourlyPrice, setHourlyPrice] = useState(-1)
@@ -34,7 +33,7 @@ export function BookingForm() {
 
    useEffect(() => {
        // Get info about the current listing
-        fetch(`/listings/${id}`)
+        fetch(`/listings/${listingId}`)
             .then((response) => response.json())
             .then((data) => {
                 const newAvailability = [];
@@ -46,14 +45,26 @@ export function BookingForm() {
                 setAvailability(newAvailability);
                 setListingUserId(data.userid);
                 setHourlyPrice(data.price);
+                setAllListingBookings(data.bookings_id);
             });
    }, []);
 
-   useEffect( () => {
-       // Check if user currently has booking and update status accordingly
-       //fetch
-       console.log("beans");
-   }, [])
+useEffect( () => {
+    // Check if current user has a booking
+    fetch(`/users/${USER_ID}`)
+        .then((response) => response.json())
+        .then((userData) => {
+            console.log(userData.renter_bookings_id, allListingBookings);
+            for(let checkId in userData.renter_bookings_id){
+                if(allListingBookings.includes(userData.renter_bookings_id[checkId])){
+                    setBookingId(checkId);
+                    setHasBooked(true);
+                    setHasSubmitted(true);
+                }
+            }
+        });
+}, [allListingBookings]);
+
 
    useEffect( () => {
        // Update arrival date
@@ -121,7 +132,7 @@ export function BookingForm() {
             let newBooking = {
                 renter_id: USER_ID,
                 host_id: listingUserId,
-                listing_id: id,
+                listing_id: listingId,
                 start_time: arrivalDate,
                 end_time: departureDate,
             };
