@@ -13,7 +13,7 @@ const ResultCard = styled(Card)(({ theme }) => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     width: "300px",
-    height: '450px',
+    height: '500px',
     position: 'relative',
     backgroundColor: 'rgb(245,245,250)'
 }))

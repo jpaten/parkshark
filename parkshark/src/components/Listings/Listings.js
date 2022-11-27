@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 axios.defaults.baseURL = 'http://localhost:5000';
 
 class Listings extends Component {
-  
+
   constructor(props) {
     super(props);
     var curr = new Date();
@@ -73,10 +73,10 @@ class Listings extends Component {
           <Box mt={2} sx={{ flexGrow: 1 }} >
             <Grid xs={0} sm={2}></Grid>
             <div className='filter' style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: "15px"}}>
-              <TextField 
-                label="City"
-                placeholder="Any"
-                onChange={newCity => this.setState({city: newCity.target.value})}
+              <TextField
+                  label="City"
+                  placeholder="Any"
+                  onChange={newCity => this.setState({city: newCity.target.value})}
               />
               <TextField
                 label="First Day"
@@ -89,24 +89,24 @@ class Listings extends Component {
                 InputLabelProps={{ shrink: true }} 
               />
               <TextField
-                
-                label="Last Day"
-                type="date"
-                defaultValue={this.state.endDate}
-                onChange={date => this.setState({
-                  endDate: Date.parse(new Date(date.target.value)) / 1000
-                })}
-                InputLabelProps={{ shrink: true }} 
+
+                  label="Last Day"
+                  type="date"
+                  defaultValue={this.state.endDate}
+                  onChange={date => this.setState({
+                    endDate: Date.parse(new Date(date.target.value)) / 1000
+                  })}
+                  InputLabelProps={{ shrink: true }}
               />
               <Button onClick={this.search.bind(this)}> search</Button>
             </div>
             <Grid className= "grid" container spacing={5} alignItems="center" justifyContent="center" >
               {this.state.filteredSpots.map((spot) => {
-                  return (
+                return (
                     <Grid item xs={'auto'} sm={'auto'}>
                       <SpotCard result = {spot}/>
                     </Grid>
-                  )
+                )
               })}
             </Grid>
           </Box>

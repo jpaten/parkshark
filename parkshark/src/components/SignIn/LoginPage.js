@@ -68,6 +68,8 @@ function LoginPage() {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(body)
             })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
   }
 
   const handleSignup = () => {
