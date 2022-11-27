@@ -14,9 +14,9 @@ class Listings extends Component {
     super(props);
     var curr = new Date();
     curr.setDate(curr.getDate()-3);
-    var first = curr.toISOString().substring(0,10);
+    var first = Date.parse(curr.toISOString().substring(0,10)) / 1000;
     curr.setDate(curr.getDate()+3);
-    var second = curr.toISOString().substring(0,10);
+    var second = Date.parse(curr.toISOString().substring(0,10)) / 1000;
     this.state = {
       city: "Any",
       render: false,
@@ -38,19 +38,31 @@ class Listings extends Component {
   search() {
     var temp;
     if (this.state.city == "Any") {
-      temp = this.state.spots.filter(spot =>
-        this.state.startDate > spot.availability[0].start_time &
-        this.state.endDate < spot.availability[0].end_time &
-        this.state.startDate < this.state.endDate
+      temp = this.state.spots.filter(spot => {
+        let valid = false;
+        spot.availability.forEach(time => {
+          if (this.state.startDate > Date.parse(new Date(time.start_time)) / 1000 &
+                this.state.endDate < Date.parse(new Date(time.end_time)) / 1000 &
+                this.state.startDate < this.state.endDate) {
+                  valid = true;
+                }
+          });
+          return valid;
+      }
       );
     }
     else {
-      temp = this.state.spots.filter(spot =>
-        this.state.startDate > spot.availability[0].start_time &
-        this.state.endDate < spot.availability[0].end_time &
-        this.state.city == spot.address.city &
-        this.state.startDate < this.state.endDate
-      );
+      temp = this.state.spots.filter(spot => {
+        let valid = false;
+        spot.availability.forEach(time => {
+          if (this.state.startDate > Date.parse(new Date(time.start_time)) / 1000 &
+                this.state.endDate < Date.parse(new Date(time.end_time)) / 1000 &
+                this.state.startDate < this.state.endDate & this.state.city == spot.address.city) {
+                  valid = true;
+                }
+          });
+          return valid;
+      });
     }
     this.setState({filteredSpots: temp});
   }
@@ -71,7 +83,9 @@ class Listings extends Component {
                 type="date"
                 defaultValue={this.state.startDate}
                 onChange={date => 
-                  this.setState({startDate: Date.parse(new Date(date.target.value)) / 1000})}
+                  this.setState({
+                    startDate: Date.parse(new Date(date.target.value)) / 1000
+                  })}
                 InputLabelProps={{ shrink: true }} 
               />
               <TextField
