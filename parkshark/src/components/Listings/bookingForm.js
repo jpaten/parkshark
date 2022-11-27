@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import Calendar from "react-calendar";
 import './calendar.css'
 import {Container, TextField} from "@mui/material";
-import Cookies from "js-cookie";
 import {useParams} from "react-router-dom";
 import fire from "../SignIn/fire";
 
@@ -68,12 +67,25 @@ export const BookingForm = (props) => {
             .then((userData) => {
                 for(let checkId in userData.renter_bookings_id){
                     if(allListingBookings.includes(userData.renter_bookings_id[checkId])){
-                        setBookingId(checkId);
-                        setHasBooked(true);
-                        setHasSubmitted(true);
+                        return userData.renter_bookings_id[checkId];
+
                     }
                 }
-            });
+            })
+            .then((foundBookingId) => {
+                if(foundBookingId) {
+                    fetch(`/bookings/${foundBookingId}`)
+                        .then((bookingResponse) => bookingResponse.json())
+                        .then((bookingData) => {
+                            setArrivalDate(new Date(bookingData.start_time));
+                            setDepartureDate(new Date(bookingData.end_time));
+                            setBookingId(bookingData._id);
+                            setHasBooked(true);
+                            setHasSubmitted(true);
+                        })
+                }
+            })
+        ;
     }, [allListingBookings]);
 
 
@@ -220,7 +232,10 @@ export const BookingForm = (props) => {
             <div>
                 <h1>Thanks for booking! You have the spot from&nbsp;
                     {new Intl.DateTimeFormat("en-US", dateOptions).format(arrivalDate)} at {arrivalDate.toLocaleTimeString("en-US", timeOptions)}&nbsp;
-                    to {new Intl.DateTimeFormat("en-US", dateOptions).format(departureDate)} at {departureDate.toLocaleTimeString("en-US", timeOptions)}
+                    to {new Intl.DateTimeFormat("en-US", dateOptions).format(departureDate)} at {departureDate.toLocaleTimeString("en-US", timeOptions)}.&nbsp;
+                </h1>
+                <h1>
+                    We'll hand things off to the owner of the spot now, who should email you about it shortly. Please contact us at parkshark@example.com if they don't get back to you, and provide your booking number {bookingId} so we can help!
                 </h1>
                 <button onClick={cancelBooking}>Cancel</button>
             </div>
