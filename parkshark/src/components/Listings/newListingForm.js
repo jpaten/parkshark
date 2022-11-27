@@ -1,11 +1,12 @@
 import {useState} from "react";
-import {TextField, Typography} from "@mui/material";
+import {createMuiTheme, TextField, Typography} from "@mui/material";
 import Calendar from "react-calendar";
 import {Redirect} from "react-router-dom";
 import styled from "styled-components";
 import "./newListingForm.css";
+import fire from "../SignIn/fire";
 
-const GOOGLE_KEY="test"
+const GOOGLE_KEY="TEST";
 
 export function NewListing () {
     const [addressState, setAddressState] = useState("");
@@ -24,6 +25,8 @@ export function NewListing () {
 
     const addListing = () => {
 
+        const user = fire.auth().currentUser;
+
         const listingData = {
             address: {
                 state: addressState,
@@ -34,55 +37,67 @@ export function NewListing () {
             },
             availability: [{
                 start_time: availabilityStartDate,
-                end_time: availabilityEndDate}],
+                end_time: availabilityEndDate
+            }],
             description: description,
             image: "TEST",
             price: parseInt(price),
-            location:{
+            location: {
                 type: "Point",
                 coordinates: [
-                    1,1
+                    1, 1
                 ]
-            }
+            },
         }
         const addressString = `${addressLine1} ${addressCity} ${addressState} ${addressPostalCode}`.replace(/ /g, "%20");
-        console.log(addressString)
-        const google_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressString + "&key=" + GOOGLE_KEY; 
+        const google_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressString + "&key=" + GOOGLE_KEY;
         fetch(google_url)
             .then((googleResponse) => googleResponse.json())
-            .then((googleData) =>{
-                if(googleData.results.length === 0){
+            .then((googleData) => {
+                if (googleData.results.length === 0) {
                     alert("Invalid address, please try again");
-                } else{
+                } else {
                     let newListing = listingData;
                     const latitude = googleData.results[0].geometry.location.lat;
-                    const longitude = googleData.results[0].geometry.location.lat;
+                    const longitude = googleData.results[0].geometry.location.lng;
                     newListing.location.coordinates = [longitude, latitude];
                     return newListing;
                 }
             })
-            .then((augmentedListing) => {
-                console.log(augmentedListing);
+            .then((listingWithCoords) => {
+                fetch(`/users/?email=${user.email}`)
+                    .then((userResponse) => userResponse.json())
+                    .then((userData) => {
+                        let finalListing = listingWithCoords;
+                        if (userData.length === 0) {
+                            alert("Your account is not recognized. Please try to make a new one, then try again");
+                        } else {
+                            finalListing.userid = userData[0]._id;
+                            return finalListing;
+                        }
+                    })
+            .then((listingWithUser) => {
+                console.log(listingWithUser);
                 fetch("listings/",
                     {
                         method: "POST",
                         headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(augmentedListing),
+                        body: JSON.stringify(listingWithUser),
                     })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        console.log(data);
-                        setNewId(data._id);
+                    .then((newListingResponse) => newListingResponse.json())
+                    .then((newListingData) => {
+                        console.log("RESPONSE",newListingData);
+                        setNewId(newListingData._id);
                         alert("Success! Redirecting you to your new spot!");
                         setDoRedirect(true);
                     });
-            })
+            });
+            });
 
     }
 
 
     if(newId !== "undefined" && doRedirect){
-        console.log(newId);
         return <Redirect to={`/listing/${newId}`}/>
     }
 
