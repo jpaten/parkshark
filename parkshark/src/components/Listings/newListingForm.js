@@ -2,6 +2,8 @@ import {useState} from "react";
 import {TextField, Typography} from "@mui/material";
 import Calendar from "react-calendar";
 import {Redirect} from "react-router-dom";
+import styled from "styled-components";
+import "./newListingForm.css";
 
 export function NewListing () {
     const [addressState, setAddressState] = useState("");
@@ -62,61 +64,91 @@ export function NewListing () {
         return <Redirect to={`/listing/${newId}`}/>
     }
     return (
-        <div>
-            <div>
-                <p>Description</p>
-                <TextField
-                    name={"description"}
-                    label={"Description"}
-                    onChange={(event) => setDescription(event.target.value)}
-                    multiline={true}
-                />
-            </div>
-            <div>
-                <p>Availability</p>
-                <Calendar
-                    onChange={(value) => {
-                        setAvailabilityStartDate(value[0]);
-                        setAvailabilityEndDate(value[1]);
-                    }}
-                    selectRange={true}
-                />
-                <p>Address</p>
-                <TextField
-                    label={"Line 1"}
-                    placeholder={"415 Portola Plaza"}
-                    onChange={(event) => setAddressLine1(event.target.value)}/>
-                <TextField
-                    label={"Line 2"}
-                    placeholder={"A28"}
-                    onChange={(event) => setAddressLine2(event.target.value)}/>
-                <TextField
-                    label={"City"}
-                    placeholder={"Los Angeles"}
-                    onChange={(event) => setAddressCity(event.target.value)}/>
-                <TextField
-                    label={"State"}
-                    placeholder={"California"}
-                    onChange={(event) => setAddressState(event.target.value)}/>
-                <TextField
-                    label={"Zip Code"}
-                    error={(isNaN(addressPostalCode) || (addressPostalCode.length !== 5 && addressPostalCode.length !== 0))}
-                    placeholder={"90095"}
-                    onChange={(event) => setAddressPostalCode(event.target.value)}/>
-            </div>
-            <div>
-                <Typography>Details</Typography>
-                <TextField
-                    label={"Hourly Price"}
-                    placeholder={10}
-                    InputProps={{startAdornment: <p>$</p>}}
-                    onChange={(event) => setPrice(event.target.value)}/>
-            </div>
-            <div>
-            <button onClick={addListing}>Add listing!</button>
-            </div>
-        </div>
+        <MainPanel1>
+            <MainPanel2>
+                <div style={{padding: 10}}>
+                    <p style={{fontSize: 25}}>Description</p>
+                    <TextField
+                        name={"description"}
+                        label={"Description"}
+                        onChange={(event) => setDescription(event.target.value)}
+                        multiline={true}
+                    />
+                </div>
+                <MainPanel3>
+                    <p style={{fontSize: 25}}>Availability</p>
+                    <div className="calendarBox">
+                        <Calendar
+                            className="calendar"
+                            onChange={(value) => {
+                                setAvailabilityStartDate(value[0]);
+                                setAvailabilityEndDate(value[1]);
+                            }}
+                            selectRange={true}
+                        />
+                    </div>
+                    <p style={{fontSize: 25}}>Address</p>
+                    <TextField
+                        label={"Line 1"}
+                        placeholder={"415 Portola Plaza"}
+                        onChange={(event) => setAddressLine1(event.target.value)}/>
+                    <TextField
+                        label={"Line 2"}
+                        placeholder={"A28"}
+                        onChange={(event) => setAddressLine2(event.target.value)}/>
+                    <TextField
+                        label={"City"}
+                        placeholder={"Los Angeles"}
+                        onChange={(event) => setAddressCity(event.target.value)}/>
+                    <TextField
+                        label={"State"}
+                        placeholder={"California"}
+                        onChange={(event) => setAddressState(event.target.value)}/>
+                    <TextField
+                        label={"Zip Code"}
+                        error={(isNaN(addressPostalCode) || (addressPostalCode.length !== 5 && addressPostalCode.length !== 0))}
+                        placeholder={"90095"}
+                        onChange={(event) => setAddressPostalCode(event.target.value)}/>
+                </MainPanel3>
+                <div>
+                    <Typography style={{fontSize: 25}}>Details</Typography>
+                    <TextField
+                        label={"Hourly Price"}
+                        placeholder={10}
+                        InputProps={{startAdornment: <p>$</p>}}
+                        onChange={(event) => setPrice(event.target.value)}/>
+                </div>
+                <div>
+                <button className="book-button" onClick={addListing}>Add listing!</button>
+                </div>
+            </MainPanel2>
+        </MainPanel1>
     )
 }
+
+const MainPanel1 = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 5% 5%;
+    align-items: center;
+    min-height: 1500px;
+    background-color: grey;
+  `;
+
+  const MainPanel2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 5% 5%;
+  align-items: center;
+  min-height: 1200px;
+  background-color: white;
+  border-radius: 25px;
+`;
+
+const MainPanel3 = styled.div`
+  padding: 5% 5%;
+  align-items: center;
+  background-color: beige;
+`;
 
 export default NewListing;

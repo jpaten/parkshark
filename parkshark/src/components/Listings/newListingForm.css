@@ -1,0 +1,40 @@
+.centralBox{
+    align-items: center;
+    color: black;
+}
+
+.book-button {
+    color: white;
+    text-decoration: underline;
+    min-height: 20px;
+    padding: 15px 15px;
+    text-align: center;
+    width: 100%;
+    display: table;
+    position: relative;
+    background-color: black;
+    border-radius: 26px;
+  }
+
+  .book-button:hover{
+    background-color: rgba(0, 146, 204, 0.9);;
+    border-radius: 14px;
+    transition: all 0.2s ease-out;
+  }
+
+  .calendarBox{
+    align-items: center;
+    align-self: center;
+    text-align: center;
+    padding-top: 2.5%;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-bottom: 2.5%;
+  }
+
+  .calendar{
+    align-self: center;
+    align-self: center;
+    text-align: center;
+    min-width: 100%;
+  }
