@@ -22,6 +22,8 @@ export function BookingForm() {
     const [hasBooked, setHasBooked] = useState(false);
 
     const {id} = useParams();
+    let [bookingId, setBookingId] = useState("");
+
     const [listingUserId, setListingUserId] = useState("");
     const [hourlyPrice, setHourlyPrice] = useState(-1)
     const [timeDelta, setTimeDelta] = useState(-1)
@@ -46,6 +48,12 @@ export function BookingForm() {
                 setHourlyPrice(data.price);
             });
    }, []);
+
+   useEffect( () => {
+       // Check if user currently has booking and update status accordingly
+       //fetch
+       console.log("beans");
+   }, [])
 
    useEffect( () => {
        // Update arrival date
@@ -126,6 +134,8 @@ export function BookingForm() {
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data);
+                    setBookingId(data._id);
+                    console.log(bookingId);
                     setHasSubmitted(true);
                     setHasBooked(true);
 
@@ -136,7 +146,7 @@ export function BookingForm() {
     }
 
     const cancelBooking = () => {
-        fetch(`/bookings/{${id}`, {
+        fetch(`/bookings/${bookingId}`, {
             method: "DELETE",
         })
             .then((response) => response.json())
