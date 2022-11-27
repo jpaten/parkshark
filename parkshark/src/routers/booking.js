@@ -65,6 +65,7 @@ router.delete('/bookings/:id', async (req, res) => {
         if (!booking) {
             return res.status(404).send()
         }
+        db.removeBooking(booking)
         res.send(booking)
     } catch (e) {
         res.status(500).send(e)
