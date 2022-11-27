@@ -29,6 +29,7 @@ class MainContent2 extends Component{
           let id = spot.id;
           pulledMarkerList += {key:id, lat:lat, lng:lng, name:addr}
         }
+        markerList = pulledMarkerList;
       });
   }
 
