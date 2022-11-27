@@ -171,10 +171,7 @@ useEffect( () => {
     if(!hasBooked) {
         return (
             <div className={"booking-form-container"}>
-                <button onClick={submitBooking}>Hi</button>
-                <form onSubmit={submitBooking}>
-                    <label>
-                        <Container>
+                    <div>
                         <p>Date</p>
                         <Calendar
                             onChange={(value) => {
@@ -184,9 +181,8 @@ useEffect( () => {
                             tileDisabled={isAvailable}
                             selectRange={true}
                         />
-                        </Container>
-                    </label>
-                    <label>
+                    </div>
+                    <div>
                         <p>Arrival Time</p>
                         <TextField
                             type={"time"}
@@ -199,17 +195,13 @@ useEffect( () => {
                             name={"departureTime"}
                             error={isInError(departureTime)}
                             onChange={(event) => setDepartureTime(event.target.value)}/>
-                    </label>
-                    <label>
-                        <p>Placeholder for submission error</p>
-                    </label>
-                    <label>
+                    </div>
+                    <div>
                         {priceLine()}
-                    </label>
-                    <label>
-                        <button type={"submit"}>Book!</button>
-                    </label>
-                </form>
+                    </div>
+                    <div>
+                        <button onClick={submitBooking}>Book!</button>
+                    </div>
             </div>
         )
     }
