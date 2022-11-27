@@ -140,11 +140,13 @@ class Profile extends React.Component {
 		return (
 			<div>
 				<div>
-					<h3>Current Info:</h3>
+					<h3> Current Information </h3>
 					<p> Name: {props.user.displayName}</p>
-					<div>Email: {props.user.email}</div>
+					<p> Email: {props.user.email}</p>
 				</div>
-				<h3> Update name: </h3>
+				<Box sx={{ m: "2rem" }} />
+				<h3> Update Username </h3>
+				<Box sx={{ m: "0.5rem" }} />
 				<div className="input-container">
 					<icon className="icon"> {<FontAwesomeIcon icon={faUser} />} </icon>
 					<input
@@ -152,12 +154,13 @@ class Profile extends React.Component {
 						type="text"
 						name="name"
 						value={this.state.newName}
-						placeholder={"Enter name"}
+						placeholder={"Enter New Username"}
 						onChange={(e) => {
 							this.setState({ newName: e.target.value });
 						}}
 					/>
 				</div>
+				<Box sx={{ m: "1rem" }} />
 				<button onClick={this.updateUserName}>Change Username</button>
 			</div>
 		);
@@ -266,16 +269,16 @@ class Profile extends React.Component {
 		return (
 			<div className="main-profile-box">
 				<h1>Account Information</h1>
-				<Box sx={{ m: "0.5rem" }} />
-				<hr />
 				<Box sx={{ m: "2rem" }} />
 				<p style={{ color: "red" }}>
 					{this.state.actionMsg !== "" ? this.state.actionMsg : null}
 				</p>
 				<this.currentInfo user={user} />
+				<Box sx={{ m: "2rem" }} />
 				<h3>Change Password:</h3>
 				<this.CurrentPasswordForm />
 				<this.ChangePasswordForm />
+				<Box sx={{ m: "2rem" }} />
 				<this.DeleteAccountForm />
 			</div>
 		);
