@@ -251,6 +251,7 @@ class Profile extends React.Component {
 				>
 					<h1>ARE YOU SURE YOU WANT TO DELETE THIS ACCOUNT?</h1>
 					<button onClick={this.toggleDeleteModal}>Cancel</button>
+					<Box sx={{ m: "2rem" }} />
 					<h1>Enter password to confirm:</h1>
 					<form>
 						<div className="input-container">
@@ -267,6 +268,7 @@ class Profile extends React.Component {
 							/>
 						</div>
 					</form>
+					<Box sx={{ m: "1rem" }} />
 					<button className="redButton" onClick={this.deleteAccount}>
 						Confirm Delete
 					</button>
