@@ -11,6 +11,7 @@ import Profile from "../Profile/Profile";
 import About from "../About/About";
 import Navbar2 from "../Navbar/Navbar2";
 import './LoginPage.css';
+import NewListing from "../Listings/newListingForm";
 function LoginPage() {
 
   //set up the initial states//
@@ -126,6 +127,7 @@ function LoginPage() {
             <Route path="/Login" component={LoginPage} />
             <Route path="/Listings" component={Listings} />
             <Route path="/Listing/:id" component={ListingPage}/>
+            <Route path="/New" component={NewListing}/>
             <Route path="/About" component={About} />
             <Route path="/Profile" component={Profile} />
           </Switch>

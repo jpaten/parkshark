@@ -54,7 +54,6 @@ useEffect( () => {
     fetch(`/users/${USER_ID}`)
         .then((response) => response.json())
         .then((userData) => {
-            console.log(userData.renter_bookings_id, allListingBookings);
             for(let checkId in userData.renter_bookings_id){
                 if(allListingBookings.includes(userData.renter_bookings_id[checkId])){
                     setBookingId(checkId);
@@ -75,7 +74,6 @@ useEffect( () => {
            arrivalDate.setSeconds(0);
        }
        setTimeDelta(departureDate.getTime()-arrivalDate.getTime()-330)
-       console.log("ArrivalDate", arrivalDate, timeDelta/1000)
    }, [arrivalTime, arrivalDate]);
 
    useEffect( () => {
@@ -87,7 +85,6 @@ useEffect( () => {
            departureDate.setSeconds(0);
        }
        setTimeDelta(departureDate.getTime()-arrivalDate.getTime()-330)
-       console.log("DepartureDate", departureDate, timeDelta/1000)
    }, [departureTime, departureDate]);
 
 
@@ -116,7 +113,6 @@ useEffect( () => {
         }
     }
     const submitBooking = () => {
-        console.log(arrivalDate);
         if(isNaN(arrivalDate.getDay())
             || isNaN(departureDate.getDay())
             || arrivalTime === ""
@@ -127,7 +123,6 @@ useEffect( () => {
             setHasSubmitted(true)
         }
         else {
-            console.log("hi!")
 
             let newBooking = {
                 renter_id: USER_ID,
@@ -136,7 +131,6 @@ useEffect( () => {
                 start_time: arrivalDate,
                 end_time: departureDate,
             };
-            console.log(JSON.stringify((newBooking)));
             fetch("/bookings", {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
@@ -144,9 +138,7 @@ useEffect( () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log(data);
                     setBookingId(data._id);
-                    console.log(bookingId);
                     setHasSubmitted(true);
                     setHasBooked(true);
 
@@ -162,7 +154,6 @@ useEffect( () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 setHasBooked(false);
                 setHasSubmitted(false);
             });
