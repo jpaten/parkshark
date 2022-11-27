@@ -1,34 +1,100 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Calendar from "react-calendar";
 import './calendar.css'
-//import {createBooking} from "../../utils/mongodb";
 import {Container, TextField} from "@mui/material";
-//import {createBooking} from "../../utils/mongodb";
 import Cookies from "js-cookie";
+import {useParams} from "react-router-dom";
+
+const USER_ID = "6361cd507f98f5c0249b249a";
+
+export function BookingForm() {
 
 
-const LISTING_NAME = "907 Westwood Blvd";
-const AVAILABLE = [[new Date(2022, 10, 3,), new Date(2022,10,4)]];
+    const [availability, setAvailability] = useState([]);
 
-const USER_ID = 10;
-const LISTING_ID = 2;
-const LANDLORD_ID = 2;
-
-export function BookingForm({listingName}) {
-
-    const [name, setName] = useState(listingName);
     const [arrivalDate, setArrivalDate] = useState(new Date());
     const [arrivalTime, setArrivalTime] = useState("");
     const [departureDate, setDepartureDate] = useState(new Date());
     const [departureTime, setDepartureTime] = useState("");
-    const [notes, setNotes] = useState("");
-    const [hasSubmitted, setHasSubmitted] = useState("");
+    const [hasSubmitted, setHasSubmitted] = useState(false);
     const [hasBooked, setHasBooked] = useState(false);
 
+    const {id: listingId} = useParams();
+    const [bookingId, setBookingId] = useState("");
+    const [allListingBookings, setAllListingBookings] = useState([])
 
-    const isAvailable = (dateInfo) => {
-        for (let i = 0; i < AVAILABLE.length; i++){
-            if (AVAILABLE[i][0] <= dateInfo.date && dateInfo.date <= AVAILABLE[i][1]){
+    const [listingUserId, setListingUserId] = useState("");
+    const [hourlyPrice, setHourlyPrice] = useState(-1)
+    const [timeDelta, setTimeDelta] = useState(-1)
+
+    const dateOptions = {day: "2-digit", month: "long", year:"numeric"};
+    const timeOptions = { hour: "2-digit", minute: "2-digit" };
+
+
+   useEffect(() => {
+       // Get info about the current listing
+        fetch(`/listings/${listingId}`)
+            .then((response) => response.json())
+            .then((data) => {
+                const newAvailability = [];
+                for (let datePair in data.availability) {
+                    let startDate = new Date(data.availability[datePair].start_time);
+                    let endDate = new Date(data.availability[datePair].end_time);
+                    newAvailability.push([startDate, endDate])
+                }
+                setAvailability(newAvailability);
+                setListingUserId(data.userid);
+                setHourlyPrice(data.price);
+                setAllListingBookings(data.bookings_id);
+            });
+   }, []);
+
+useEffect( () => {
+    // Check if current user has a booking
+    fetch(`/users/${USER_ID}`)
+        .then((response) => response.json())
+        .then((userData) => {
+            console.log(userData.renter_bookings_id, allListingBookings);
+            for(let checkId in userData.renter_bookings_id){
+                if(allListingBookings.includes(userData.renter_bookings_id[checkId])){
+                    setBookingId(checkId);
+                    setHasBooked(true);
+                    setHasSubmitted(true);
+                }
+            }
+        });
+}, [allListingBookings]);
+
+
+   useEffect( () => {
+       // Update arrival date
+       if(arrivalTime !== ""){
+           let splitArrivalTime = arrivalTime.split(":");
+           arrivalDate.setHours(parseInt(splitArrivalTime[0]));
+           arrivalDate.setMinutes(parseInt(splitArrivalTime[1]));
+           arrivalDate.setSeconds(0);
+       }
+       setTimeDelta(departureDate.getTime()-arrivalDate.getTime()-330)
+       console.log("ArrivalDate", arrivalDate, timeDelta/1000)
+   }, [arrivalTime, arrivalDate]);
+
+   useEffect( () => {
+       // Update departure date
+       if(departureTime !== ""){
+           let splitDepartureTime = departureTime.split(":");
+           departureDate.setHours(parseInt(splitDepartureTime[0]));
+           departureDate.setMinutes(parseInt(splitDepartureTime[1]));
+           departureDate.setSeconds(0);
+       }
+       setTimeDelta(departureDate.getTime()-arrivalDate.getTime()-330)
+       console.log("DepartureDate", departureDate, timeDelta/1000)
+   }, [departureTime, departureDate]);
+
+
+
+    const isAvailable = ({activeStartDate, date, view}) => {
+        for (let i = 0; i < availability.length; i++){
+            if (availability[i][0] <= date && date <= availability[i][1]){
                 return 0;
             }
         }
@@ -36,53 +102,84 @@ export function BookingForm({listingName}) {
 
     }
 
+    const isInError = (fieldBody) => hasSubmitted && (fieldBody === "");
+
+    const priceLine = () => {
+        if(timeDelta > 0 && arrivalTime !== "" && departureTime !== "") {
+            return (
+                <p>Price: ${Math.round(((timeDelta / 3600000.0 * hourlyPrice) + Number.EPSILON)*100)/100}</p>
+            );
+        } else {
+            return (
+                <p>Enter a valid set of dates to determine the price</p>
+            );
+        }
+    }
     const submitBooking = () => {
-        let splitArrivalTime = arrivalTime.split(":");
-        arrivalDate.setHours(parseInt(splitArrivalTime[0]));
-        arrivalDate.setMinutes(parseInt(splitArrivalTime[1]));
-        let splitDepartureTime = departureTime.split(":");
-        departureDate.setHours(parseInt(splitDepartureTime[0]));
-        departureDate.setMinutes(parseInt(splitDepartureTime[1]));
         console.log(arrivalDate);
+        if(isNaN(arrivalDate.getDay())
+            || isNaN(departureDate.getDay())
+            || arrivalTime === ""
+            || departureTime === ""
+            || ( arrivalDate > departureDate))
+        {
+            // BAD SUBMISSION
+            setHasSubmitted(true)
+        }
+        else {
+            console.log("hi!")
 
-        let newBooking = {
-            renter_id: Cookies.get("userID"),
-            listing_id: LISTING_ID,
-            rentee_id: LANDLORD_ID,
-            time_interval: {
-                starttime: arrivalDate,
-                endtime: departureDate,
-            },
-            createdAt: Date.now(),
-            updatedAt: Date.now()
-        };
+            let newBooking = {
+                renter_id: USER_ID,
+                host_id: listingUserId,
+                listing_id: listingId,
+                start_time: arrivalDate,
+                end_time: departureDate,
+            };
+            console.log(JSON.stringify((newBooking)));
+            fetch("/bookings", {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(newBooking),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    setBookingId(data._id);
+                    console.log(bookingId);
+                    setHasSubmitted(true);
+                    setHasBooked(true);
 
-        /*fetch("URL", {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newBooking),
-        });//ADD ERROR RESPONSE*/
+                    }
+                );// HANDLE ERRORS
 
-        setHasBooked(true);
+        }
+    }
+
+    const cancelBooking = () => {
+        fetch(`/bookings/${bookingId}`, {
+            method: "DELETE",
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                setHasBooked(false);
+                setHasSubmitted(false);
+            });
     }
 
     if(!hasBooked) {
         return (
             <div className={"booking-form-container"}>
+                <button onClick={submitBooking}>Hi</button>
                 <form onSubmit={submitBooking}>
-                    <label>
-                        <p>Your Name</p>
-                        <TextField
-                            name={"name"}
-                            onChange={(event) => setName(event.target.value)}/>
-                    </label>
                     <label>
                         <Container>
                         <p>Date</p>
                         <Calendar
                             onChange={(value) => {
                                 setArrivalDate(value[0]);
-                                setDepartureDate(value[0]);
+                                setDepartureDate(value[1]);
                             }}
                             tileDisabled={isAvailable}
                             selectRange={true}
@@ -94,18 +191,20 @@ export function BookingForm({listingName}) {
                         <TextField
                             type={"time"}
                             name={"arrivalTime"}
+                            error={isInError(arrivalTime)}
                             onChange={(event) => setArrivalTime(event.target.value)}/>
                         <p>Departure time</p>
                         <TextField
                             type={"time"}
                             name={"departureTime"}
+                            error={isInError(departureTime)}
                             onChange={(event) => setDepartureTime(event.target.value)}/>
                     </label>
                     <label>
-                        <p>Any notes?</p>
-                        <TextField
-                            name={"notes"}
-                            onChange={(event) => setNotes(event.target.value)}/>
+                        <p>Placeholder for submission error</p>
+                    </label>
+                    <label>
+                        {priceLine()}
                     </label>
                     <label>
                         <button type={"submit"}>Book!</button>
@@ -116,9 +215,12 @@ export function BookingForm({listingName}) {
     }
     else{
         return(
-            <div>j
-                <h1>Thanks for booking {listingName}! You have the spot from {new Intl.DateTimeFormat("en-US", {month: "long"}).format(arrivalDate)} {arrivalDate.getDay()} at {arrivalDate.toLocaleTimeString()} to {new Intl.DateTimeFormat("en-US", {month: "long"}).format(departureDate)} {departureDate.getDay()} at {departureDate.toLocaleTimeString()}</h1>
-                <button onClick={() => setHasBooked(false)}>Cancel</button>
+            <div>
+                <h1>Thanks for booking! You have the spot from&nbsp;
+                    {new Intl.DateTimeFormat("en-US", dateOptions).format(arrivalDate)} at {arrivalDate.toLocaleTimeString("en-US", timeOptions)}&nbsp;
+                    to {new Intl.DateTimeFormat("en-US", dateOptions).format(departureDate)} at {departureDate.toLocaleTimeString("en-US", timeOptions)}
+                </h1>
+                <button onClick={cancelBooking}>Cancel</button>
             </div>
         );
     }

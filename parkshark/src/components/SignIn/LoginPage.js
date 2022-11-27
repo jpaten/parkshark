@@ -83,7 +83,7 @@ function LoginPage() {
     renter_bookings_id: [],
     listings_id: [],
   }
-  /*fetch("URL", {
+  /*fetch("/users", {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userObject),
@@ -125,7 +125,7 @@ function LoginPage() {
             <Route path="/Home" component={Home} />
             <Route path="/Login" component={LoginPage} />
             <Route path="/Listings" component={Listings} />
-            <Route path="/Listing" component={ListingPage}/>
+            <Route path="/Listing/:id" component={ListingPage}/>
             <Route path="/About" component={About} />
             <Route path="/Profile" component={Profile} />
           </Switch>
