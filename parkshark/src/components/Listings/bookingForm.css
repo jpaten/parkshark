@@ -1,5 +1,51 @@
 .booking-form-container{
-    display: flex;
     align-items: center;
     justify-content: center;
 }
+
+.book-button1 {
+    color: white;
+    text-decoration: underline;
+    min-height: 20px;
+    padding: 15px 15px;
+    text-align: center;
+    width: 40%;
+    display: table;
+    background-color: black;
+    border-radius: 26px;
+    margin-bottom: 8px;
+    margin-left: 30%;
+  }
+
+  .book-button1:hover{
+    background-color: rgba(0, 146, 204, 0.9);
+    border-radius: 14px;
+    transition: all 0.2s ease-out;
+  }
+
+  .align-center{
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    min-width: 50%;
+    padding-top: 2.5%;
+  }
+
+  .book-button2 {
+    color: white;
+    text-decoration: underline;
+    min-height: 20px;
+    padding: 15px 15px;
+    text-align: center;
+    width: 40%;
+    display: table;
+    background-color: black;
+    border-radius: 26px;
+    margin-bottom: 8px;
+  }
+
+  .book-button2:hover{
+    background-color: red;
+    border-radius: 14px;
+    transition: all 0.2s ease-out;
+  }

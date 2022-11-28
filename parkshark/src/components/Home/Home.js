@@ -4,13 +4,13 @@ import styled from "styled-components";
 import GoogleMapReact from 'google-map-react';
 import Marker from "./Marker.tsx";
 
-const key = {"key": "supersecretkey"};
+const key = {"key": "AIzaSyAkPj66fSNYOVaMn9Q4qDwe3yOTQnPw7Kw"};
 function MainContent2(){
   return(
     <MainPanel1>
           <div style={{ height: '80vh', width: '80%' }}>
             <GoogleMapReact
-              bootstrapURLKeys={{ key: key}}
+              bootstrapURLKeys={{ key: key["key"]}}
               defaultCenter={defaultProps.center}
               defaultZoom={defaultProps.zoom}
             >

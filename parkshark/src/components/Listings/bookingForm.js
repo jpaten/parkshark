@@ -4,6 +4,8 @@ import './calendar.css'
 import {Container, TextField} from "@mui/material";
 import {useParams} from "react-router-dom";
 import fire from "../SignIn/fire";
+import styled from "styled-components";
+import './bookingForm.css';
 
 
 export const BookingForm = (props) => {
@@ -186,61 +188,97 @@ export const BookingForm = (props) => {
     if(!hasBooked) {
         let link = "http://localhost:3000/Bookings/" + listid;
         return (
-            <div className={"booking-form-container"}>
-                <div>
-                    <p>Date</p>
-                    <a href={link}>
-                        <button >
-                            View Current Bookings
-                        </button>
-                    </a>
+            <MainPanel1>
+                <MainPanel2>
+                        <MainPanel3>
+                            <p style={{fontSize: 25, padding: 5}}>Date</p>
+                            <a href={link}>
+                                <button className="book-button1">
+                                    View Current Bookings
+                                </button>
+                            </a>
 
-                    <Calendar
-                        onChange={(value) => {
-                            setArrivalDate(value[0]);
-                            setDepartureDate(value[1]);
-                        }}
-                        tileDisabled={isAvailable}
-                        selectRange={true}
-                    />
-                </div>
-                <div>
-                    <p>Arrival Time</p>
-                    <TextField
-                        type={"time"}
-                        name={"arrivalTime"}
-                        error={isInError(arrivalTime)}
-                        onChange={(event) => setArrivalTime(event.target.value)}/>
-                    <p>Departure time</p>
-                    <TextField
-                        type={"time"}
-                        name={"departureTime"}
-                        error={isInError(departureTime)}
-                        onChange={(event) => setDepartureTime(event.target.value)}/>
-                </div>
-                <div>
-                    {priceLine()}
-                </div>
-                <div>
-                    <button onClick={submitBooking}>Book!</button>
-                </div>
-            </div>
+                            <Calendar
+                                className="calendar"
+                                onChange={(value) => {
+                                    setArrivalDate(value[0]);
+                                    setDepartureDate(value[1]);
+                                }}
+                                tileDisabled={isAvailable}
+                                selectRange={true}
+                            />
+                        </MainPanel3>
+                        <div>
+                            <p style={{fontSize: 25, padding: 5}}>Arrival Time</p>
+                            <TextField
+                                type={"time"}
+                                name={"arrivalTime"}
+                                error={isInError(arrivalTime)}
+                                onChange={(event) => setArrivalTime(event.target.value)}/>
+                            <p style={{fontSize: 25, padding: 5}}>Departure time</p>
+                            <TextField
+                                type={"time"}
+                                name={"departureTime"}
+                                error={isInError(departureTime)}
+                                onChange={(event) => setDepartureTime(event.target.value)}/>
+                        </div>
+                        <div style={{fontSize: 18, padding: 5}}>
+                            {priceLine()}
+                        </div>
+                        <div className="align-center">
+                            <button className="book-button1" onClick={submitBooking}>Book!</button>
+                        </div>
+                </MainPanel2>
+            </MainPanel1>
         )
     }
     else{
         return(
-            <div>
-                <h1>Thanks for booking! You have the spot from&nbsp;
-                    {new Intl.DateTimeFormat("en-US", dateOptions).format(arrivalDate)} at {arrivalDate.toLocaleTimeString("en-US", timeOptions)}&nbsp;
-                    to {new Intl.DateTimeFormat("en-US", dateOptions).format(departureDate)} at {departureDate.toLocaleTimeString("en-US", timeOptions)}.&nbsp;
-                </h1>
-                <h1>
-                    We'll hand things off to the owner of the spot now, who should email you about it shortly. Please contact us at parkshark@example.com if they don't get back to you, and provide your booking number {bookingId} so we can help!
-                </h1>
-                <button onClick={cancelBooking}>Cancel</button>
-            </div>
+            <MainPanel1>
+                <MainPanel2>
+                    <h1 style={{fontSize: 25, padding: 5, margin: 10}}>Thanks for booking! You have the spot from&nbsp;
+                        {new Intl.DateTimeFormat("en-US", dateOptions).format(arrivalDate)} at {arrivalDate.toLocaleTimeString("en-US", timeOptions)}&nbsp;
+                        to {new Intl.DateTimeFormat("en-US", dateOptions).format(departureDate)} at {departureDate.toLocaleTimeString("en-US", timeOptions)}.&nbsp;
+                    </h1>
+                    <h1 style={{fontSize: 25, padding: 5, margin: 10}}>
+                        We'll hand things off to the owner of the spot now, who should email you about it shortly. Please contact us at parkshark@example.com if they don't get back to you, and provide your booking number {bookingId} so we can help!
+                    </h1>
+                    <button className="book-button2" onClick={cancelBooking}>Cancel</button>
+                </MainPanel2>
+            </MainPanel1>
         );
     }
 }
+
+const MainPanel1 = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 5% 5%;
+    align-items: center;
+    min-height: 1500px;
+    background-color: grey;
+  `;
+
+  const MainPanel2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 5% 5%;
+  align-items: center;
+  min-height: 1000px;
+  background-color: white;
+  border-radius: 25px;
+  max-width: 70%;
+  min-width: 60%;
+`;
+
+const MainPanel3 = styled.div`
+  padding-left: 12%;
+  padding-right: 12%;
+  padding-top: 6%;
+  padding-bottom: 6%;
+  min-width: 800px;
+  align-items: center;
+  background-color: beige;
+`;
 
 export default BookingForm;
