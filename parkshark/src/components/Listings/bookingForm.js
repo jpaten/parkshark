@@ -295,7 +295,7 @@ const MainPanel3 = styled.div`
   padding-bottom: 6%;
   min-width: 800px;
   align-items: center;
-  background-color: beige;
+  background-color: rgba(189,195,199);
 `;
 
 export default BookingForm;

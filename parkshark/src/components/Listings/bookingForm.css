@@ -49,3 +49,7 @@
     border-radius: 14px;
     transition: all 0.2s ease-out;
   }
+
+  .calendar{
+    border-radius: 12px;
+  }
