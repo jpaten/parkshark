@@ -34,7 +34,7 @@ class BookingCard extends React.Component {
             this.setState({ booking: res.data});
         })
             .then(renterId => {
-                axios.get("users/" + "63813ba9c480428938c7e278")
+                axios.get("users/" + renterId)
                     .then(res => {
                         console.log("user",res);
                         this.setState({ user: res.data});
