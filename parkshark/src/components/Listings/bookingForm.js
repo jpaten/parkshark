@@ -202,19 +202,26 @@ export const BookingForm = (props) => {
             });
     }
 
+    const viewBookingButton = () => {
+        if (listingUserId === viewingUserId) {
+            const link = "http://localhost:3000/Bookings/" + listid;
+
+            return (
+                <a href={link}>
+                    <button className="book-button1">
+                        View Current Bookings
+                    </button>
+                </a>
+            )
+        }
+    }
+
     if(!hasBooked) {
-        let link = "http://localhost:3000/Bookings/" + listid;
         return (
             <MainPanel1>
                 <MainPanel2>
                         <MainPanel3>
-                            <p style={{fontSize: 25, padding: 5}}>Date</p>
-                            <a href={link}>
-                                <button className="book-button1">
-                                    View Current Bookings
-                                </button>
-                            </a>
-
+                            {viewBookingButton()}
                             <Calendar
                                 className="calendar"
                                 onChange={(value) => {
