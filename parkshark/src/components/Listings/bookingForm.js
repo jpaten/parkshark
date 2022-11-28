@@ -147,8 +147,15 @@ export const BookingForm = (props) => {
         {
             // BAD SUBMISSION
             setHasSubmitted(true)
+            alert("Make sure your arrival time is after your departure time, and that both are filled out");
         }
         else {
+
+            for(let i in availability){
+                if(!(arrivalDate < availability[i][0] < departureDate < availability[i][1])){
+                    alert("Unfortunately, there is already a booking at this time.")
+                }
+            }
 
             let newBooking = {
                 renter_id: viewingUserId,
