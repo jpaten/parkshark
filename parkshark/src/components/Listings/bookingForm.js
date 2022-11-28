@@ -7,7 +7,6 @@ import fire from "../SignIn/fire";
 import styled from "styled-components";
 import './bookingForm.css';
 
-
 export const BookingForm = (props) => {
     let listid = props.listid;
     const [availability, setAvailability] = useState([]);

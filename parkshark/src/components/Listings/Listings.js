@@ -71,6 +71,9 @@ class Listings extends Component {
     if (this.state.spots.length > 0)
       return (
           <Box mt={2} sx={{ flexGrow: 1 }} >
+            <h1 className="search-title">
+              Search Listings
+            </h1>
             <Grid xs={0} sm={2}></Grid>
             <div className='filter' style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: "15px"}}>
               <TextField

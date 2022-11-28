@@ -8,6 +8,7 @@ import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea, CardActions } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
+import './BookingCard.css'
 axios.defaults.baseURL = 'http://localhost:5000';
 
 const ResultCard = styled(Card)(({ theme }) => ({
@@ -44,7 +45,7 @@ class BookingCard extends React.Component {
     render() {
         return (
         <Grid item xs={12} sm={6} md={4}>
-            <ResultCard>
+            <ResultCard className="card">
                 <CardActionArea >
                     <CardContent height="200px">
                         <Typography gutterBottom variant="subtitle1" component="div" textAlign="left">

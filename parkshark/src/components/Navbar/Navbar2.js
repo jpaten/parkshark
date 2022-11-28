@@ -64,7 +64,16 @@ function Button() {
               className='nav-links'
               onClick={closeMobileMenu}
             >
-              Listings
+              Find Listings
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link
+              to='/new'
+              className='nav-links'
+              onClick={closeMobileMenu}
+            >
+              Create A Listing
             </Link>
           </li>
           <li className='nav-item'>
