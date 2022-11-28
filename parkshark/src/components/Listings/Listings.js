@@ -55,9 +55,11 @@ class Listings extends Component {
       temp = this.state.spots.filter(spot => {
         let valid = false;
         spot.availability.forEach(time => {
-          if (this.state.startDate > Date.parse(new Date(time.start_time)) / 1000 &
+          console.log(this.state.city == spot.address.city);
+          console.log(this.state.city);
+            if (this.state.startDate > Date.parse(new Date(time.start_time)) / 1000 &
                 this.state.endDate < Date.parse(new Date(time.end_time)) / 1000 &
-                this.state.startDate < this.state.endDate & this.state.city == spot.address.city) {
+                this.state.startDate < this.state.endDate & (this.state.city == spot.address.city)) {
                   valid = true;
                 }
           });
