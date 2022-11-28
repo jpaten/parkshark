@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
 import Marker from "./Marker.tsx";
+import Box from "@mui/material/Box";
 
 const key = { key: "supersecretkey" };
 function MainContent2() {
@@ -12,7 +13,12 @@ function MainContent2() {
 				<h1>Welcome to ParkShark</h1>
 			</div>
 			<div className="padded modernWhite">
-				<p>Explore nearby parking spots.</p>
+				<p>Explore nearby parking spots</p>
+			</div>
+			<Box sx={{ m: "0.7rem" }} />
+			<div>
+				<button className="padded">Explore more listings</button>
+				<button className="padded">Create a new listing</button>
 			</div>
 			<div style={{ height: "80vh", width: "80%", margin: 40 }}>
 				<GoogleMapReact
