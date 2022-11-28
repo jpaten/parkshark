@@ -17,8 +17,13 @@ Helps you find parking a little more efficiently
 
 
 ## Start backend 
-Set `MONGODB_URL=mongodb+srv://<user>:<password>@<URL>/?retryWrites=true&w=majority`
+Set Environment Variable\
+ `MONGODB_URL=mongodb+srv://<user>:<password>@<URL>/?retryWrites=true&w=majority` \
+Run \
 `$ npm run serve`
 
 ## Start frontend
-'$ npm start'
+Set \
+ `REACT_APP_GOOGLE_MAPS_API_KEY=<your-api-key>` \
+Run \
+`$ npm start`
