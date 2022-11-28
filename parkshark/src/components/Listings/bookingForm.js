@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Calendar from "react-calendar";
 import './calendar.css'
 import {Container, TextField} from "@mui/material";
@@ -6,6 +6,9 @@ import {useParams} from "react-router-dom";
 import fire from "../SignIn/fire";
 import styled from "styled-components";
 import './bookingForm.css';
+import GoogleMapReact from "google-map-react";
+import Marker from "../Home/Marker.tsx";
+import key from "../../keys.json";
 
 export const BookingForm = (props) => {
     let listid = props.listid;
@@ -30,6 +33,8 @@ export const BookingForm = (props) => {
     const dateOptions = {day: "2-digit", month: "long", year:"numeric"};
     const timeOptions = { hour: "2-digit", minute: "2-digit" };
 
+    const [location, setLocation] = useState([]);
+
 
     useEffect(() => {
         const user = fire.auth().currentUser;
@@ -48,6 +53,7 @@ export const BookingForm = (props) => {
                 setListingUserId(data.userid);
                 setHourlyPrice(data.price);
                 setAllListingBookings(data.bookings_id);
+                setLocation([data.location.coordinates[1], data.location.coordinates[0]]);
             });
 
         //Get info about the current user
@@ -221,7 +227,26 @@ export const BookingForm = (props) => {
             <MainPanel1>
                 <MainPanel2>
                         <MainPanel3>
+                            <p style={{fontSize: 25, padding: 5}}>New Booking:</p>
+                            <div style={{ height: "30vh", width: "100%", margin: "2vh" }}>
+                            <GoogleMapReact
+                                bootstrapURLKeys={{ key: key["key"] }}
+                                defaultCenter={{
+                                    lat: 34.05,
+                                    lng: 241.61502627,
+                                }}
+                                defaultZoom={11}
+                            >
+                                <Marker
+                                    onClick={(marker) => {}}
+                                    lat={location[0]}
+                                    lng={location[1]}
+                                    name={"bob"}/>
+
+                            </GoogleMapReact>
+                            </div>
                             {viewBookingButton()}
+                            <p style={{fontSize: 25, padding: 5}}>Select Dates:</p>
                             <Calendar
                                 className="calendar"
                                 onChange={(value) => {

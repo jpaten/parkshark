@@ -6,7 +6,7 @@ import styled from "styled-components";
 import "./newListingForm.css";
 import fire from "../SignIn/fire";
 
-const GOOGLE_KEY="TEST";
+import key from "../../keys.json";
 
 export function NewListing () {
     const [addressState, setAddressState] = useState("");
@@ -50,7 +50,7 @@ export function NewListing () {
             },
         }
         const addressString = `${addressLine1} ${addressCity} ${addressState} ${addressPostalCode}`.replace(/ /g, "%20");
-        const google_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressString + "&key=" + GOOGLE_KEY;
+        const google_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressString + "&key=" + key["key"];
         fetch(google_url)
             .then((googleResponse) => googleResponse.json())
             .then((googleData) => {
