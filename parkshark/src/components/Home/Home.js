@@ -8,10 +8,10 @@ const key = { key: "supersecretkey" };
 function MainContent2() {
 	return (
 		<MainPanel1>
-			<div className="padded">
+			<div className="padded modernWhite">
 				<h1>Welcome to ParkShark</h1>
 			</div>
-			<div className="padded">
+			<div className="padded modernWhite">
 				<p>Explore nearby parking spots.</p>
 			</div>
 			<div style={{ height: "80vh", width: "80%", margin: 40 }}>

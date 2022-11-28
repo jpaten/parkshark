@@ -100,15 +100,16 @@
     font-style: normal;
   }
 
-h1, p{
-  font-family: 'Jura', sans-serif;
-  color: white;
-}
+
 p{
   margin-top: 10px;
   font-size: 21px;
 }
 
+.modernWhite{
+  font-family: 'Jura', sans-serif;
+  color: white;
+}
 .padded{
   margin-left: 53px;
 }
