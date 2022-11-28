@@ -3,13 +3,14 @@ import React, {Component} from 'react';
 import styled from "styled-components";
 import GoogleMapReact from 'google-map-react';
 import Marker from "./Marker.tsx";
-import { render } from 'react-dom';
+import {Redirect} from "react-router-dom";
 
-const key = {"key": "key"};
+const key = {"key": ""};
 class MainContent2 extends Component{
   constructor(props) {
     super(props);
-    //this.state = 
+    this.state = {markerList: [], doRedirect: false, redirectId: ""};
+    //this.state =
   }
 
   static defaultProps = {
@@ -21,20 +22,23 @@ class MainContent2 extends Component{
   };
 
   componentDidMount() {
-    console.log("is called?")
     fetch('/listings')
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        var pulledMarkerList = [];
-        for (let spot in data){
-          let lat = data[spot].location.coordinates[0];
-          let lng =  data[spot].location.coordinates[1];
-          let addr = data[spot].address.line_1;
-          let id = data[spot].location.coordinates.id;
-          pulledMarkerList.push({key:id, lat:lat, lng:lng, name:addr})
+        let pulledMarkerList = [];
+        for (let spot in data) {
+          if(data[spot].location && data[spot].address) {
+            let lat = data[spot].location.coordinates[1];
+            let lng = data[spot].location.coordinates[0];
+            let addr = data[spot].address.line_1;
+            let key = data[spot]._id;
+            pulledMarkerList.push({key: key, lat: lat, lng: lng, name: addr})
+          }
         }
-        markerList = pulledMarkerList;
+        this.setState({
+            markerList: pulledMarkerList
+          });
+        //markerList = pulledMarkerList;
       });
   }
 
@@ -42,11 +46,17 @@ class MainContent2 extends Component{
     //this.props.center.lat = marker.lat;
     //this.props.center.lat = marker.lng;
     //this.props.zoom = this.props.zoom + 2;
-    alert("marker named: " + marker.name);
-    console.log('does it work?');
+    console.log(marker.target.id);
+    this.setState({doRedirect: true, redirectId: marker.target.id});
   };
 
   render() {
+    console.log(this.state.markerList)
+    if(this.state.doRedirect){
+      return(
+        <Redirect to={`/listing/${this.state.redirectId}`}/>
+      )
+    }
     return(
       <MainPanel1>
             <div style={{ height: '80vh', width: '80%' }}>
@@ -55,10 +65,10 @@ class MainContent2 extends Component{
                 defaultCenter={this.props.center}
                 defaultZoom={this.props.zoom}
               >
-              {markerList.map(marker =>
+              {this.state.markerList.map(marker =>
                 <Marker
                   onClick={(marker) => this.onMarkerClick(marker)}
-                  key={marker.key}
+                  spotId={marker.key}
                   lat={marker.lat}
                   lng={marker.lng}
                   name={marker.name}
@@ -73,12 +83,7 @@ class MainContent2 extends Component{
 
 
 
-var markerList = [
-  {key:1, lat:34.05, lng:241.615, name:"My secret address1"},
-  {key:2, lat:34.06, lng:241.62, name:"My secret address2"},
-  {key:3, lat:34.07, lng:241.63, name:"My secret address3"},
-  {key:4, lat:34.15, lng:241.63, name:"My secret address4"}
-]
+
 
 const MainPanel1 = styled.div`
     display: flex;
