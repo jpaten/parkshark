@@ -58,7 +58,7 @@ export const BookingForm = (props) => {
                     setViewingUserId(userData[0]._id);
                     console.log(userData[0]._id);
                 }
-            })
+            });
     }, []);
 
     useEffect( () => {
@@ -115,8 +115,19 @@ export const BookingForm = (props) => {
 
 
     const isAvailable = ({activeStartDate, date, view}) => {
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
         for (let i = 0; i < availability.length; i++){
-            if (availability[i][0] <= date && date <= availability[i][1]){
+            const minimizedStartDate = availability[i][0];
+            minimizedStartDate.setHours(0);
+            minimizedStartDate.setMinutes(0);
+            minimizedStartDate.setSeconds(0);
+            const minimizedEndDate = availability[i][1];
+            minimizedEndDate.setHours(0);
+            minimizedEndDate.setMinutes(0);
+            minimizedEndDate.setSeconds(0);
+            if (minimizedStartDate <= date && date < minimizedEndDate){
                 return 0;
             }
         }
@@ -146,8 +157,15 @@ export const BookingForm = (props) => {
         {
             // BAD SUBMISSION
             setHasSubmitted(true)
+            alert("Make sure your arrival time is after your departure time, and that both are filled out");
         }
         else {
+
+            for(let i in availability){
+                if(!(availability[i][0]  < arrivalDate < departureDate < availability[i][1])){
+                    alert("Unfortunately, there is already a booking at this time.")
+                }
+            }
 
             let newBooking = {
                 renter_id: viewingUserId,

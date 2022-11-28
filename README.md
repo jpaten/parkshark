@@ -1,23 +1,24 @@
 # parkshark
 Helps you find parking a little more efficiently
 
-To DO:
-    Lisings Page:
-    - listings page pull data from backend --Ben
+## Requirements
 
-    ? Page: (new page or inout into listings page/pop-ups)
+### Node Packages
+- Mongoose >= 6.5.0
+- Express >= 4.18.2
+- Firebase >= 5.2.9
+- React == 18.1.0
+(Refer to package.json for additional packages)
 
-    - Button for adding listing and page to enter info -- Jonah/Drake/Tay/Ben
-    - Button to delete listing -- Jonah/Drake/Tay/Ben
+### Backend 
+- NodeJS
+- Firebase Email/Password Auth
+- MongoDB
 
-    - Page to book listing -- ?? buttons on listing if you're owner or check at delete -- Jonah (drake CSS)
 
-    Map page:
-    - Map update from backend spots --drake
-    - map onclick display listing info --drake
+## Start backend 
+Set `MONGODB_URL=mongodb+srv://<user>:<password>@<URL>/?retryWrites=true&w=majority`
+`$ npm run serve`
 
-    Authorization Update:
-    - how to get user_id for verifications???
-
-    Video:
-    -everyone
+## Start frontend
+'$ npm start'
