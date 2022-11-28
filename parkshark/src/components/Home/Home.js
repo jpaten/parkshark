@@ -5,8 +5,12 @@ import GoogleMapReact from 'google-map-react';
 import Marker from "./Marker.tsx";
 import { render } from 'react-dom';
 
-const key = {"key": ""};
+const key = {"key": "key"};
 class MainContent2 extends Component{
+  constructor(props) {
+    super(props);
+    //this.state = 
+  }
 
   static defaultProps = {
     center: {
@@ -17,17 +21,18 @@ class MainContent2 extends Component{
   };
 
   componentDidMount() {
+    console.log("is called?")
     fetch('/listings')
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
         var pulledMarkerList = [];
-        for (let spot in data.smth){
-          let lat = spot.lat;
-          let lng = spot.lat;
-          let addr = spot.addr;
-          let id = spot.id;
-          pulledMarkerList += {key:id, lat:lat, lng:lng, name:addr}
+        for (let spot in data){
+          let lat = data[spot].location.coordinates[0];
+          let lng =  data[spot].location.coordinates[1];
+          let addr = data[spot].address.line_1;
+          let id = data[spot].location.coordinates.id;
+          pulledMarkerList.push({key:id, lat:lat, lng:lng, name:addr})
         }
         markerList = pulledMarkerList;
       });
@@ -38,6 +43,7 @@ class MainContent2 extends Component{
     //this.props.center.lat = marker.lng;
     //this.props.zoom = this.props.zoom + 2;
     alert("marker named: " + marker.name);
+    console.log('does it work?');
   };
 
   render() {
@@ -73,7 +79,6 @@ var markerList = [
   {key:3, lat:34.07, lng:241.63, name:"My secret address3"},
   {key:4, lat:34.15, lng:241.63, name:"My secret address4"}
 ]
-
 
 const MainPanel1 = styled.div`
     display: flex;

@@ -21,6 +21,3 @@ To DO:
 
     Video:
     -everyone
-
-    Meeting Saturday 10am!!!!!!!!!!!!!!!!!!!!!!!!!
-    if you havent been assigned anything ask us lol
