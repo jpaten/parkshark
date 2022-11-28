@@ -105,6 +105,7 @@ export function NewListing () {
         <MainPanel1>
             <MainPanel2>
                 <div style={{padding: 10}}>
+                    <p style={{padding:10, fontSize: 25}}><strong>Create a New Listing:</strong></p>
                     <p style={{padding:10, fontSize: 25}}>Description</p>
                     <TextField
                         name={"description"}

@@ -227,7 +227,7 @@ export const BookingForm = (props) => {
             <MainPanel1>
                 <MainPanel2>
                         <MainPanel3>
-                            <p style={{fontSize: 25, padding: 5}}>New Booking:</p>
+                            <p style={{fontSize: 25, padding: 5}}>Create a New Booking</p>
                             <div style={{ height: "30vh", width: "100%", margin: "2vh" }}>
                             <GoogleMapReact
                                 bootstrapURLKeys={{ key: key["key"] }}
