@@ -34,7 +34,7 @@ class BookingCard extends React.Component {
             this.setState({ booking: res.data});
         })
             .then(renterId => {
-                axios.get("users/" + renterId)
+                axios.get("users/" + "63813ba9c480428938c7e278")
                     .then(res => {
                         console.log("user",res);
                         this.setState({ user: res.data});
@@ -60,7 +60,7 @@ class BookingCard extends React.Component {
                                     Booking:
                                 </Typography>
                                 <Typography gutterBottom variant="subtitle1" component="div" textAlign="left">
-                                    Renter Email - {this.state.user.email}
+                                    Renter Email: {this.state.user.email}
                                 </Typography>
                             </CardContent>
                             <Typography variant="body2" color="text.secondary" textAlign="left">
