@@ -8,6 +8,7 @@ import styled from "styled-components";
 import './bookingForm.css';
 import GoogleMapReact from "google-map-react";
 import Marker from "../Home/Marker.tsx";
+import key from "../../keys.json";
 
 export const BookingForm = (props) => {
     let listid = props.listid;
@@ -229,7 +230,7 @@ export const BookingForm = (props) => {
                             <p style={{fontSize: 25, padding: 5}}>New Booking:</p>
                             <div style={{ height: "30vh", width: "100%", margin: "2vh" }}>
                             <GoogleMapReact
-                                bootstrapURLKeys={{ key: "" }}
+                                bootstrapURLKeys={{ key: key["key"] }}
                                 defaultCenter={{
                                     lat: 34.05,
                                     lng: 241.61502627,

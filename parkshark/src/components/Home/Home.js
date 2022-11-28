@@ -6,7 +6,7 @@ import Marker from "./Marker.tsx";
 import { Redirect } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { Component } from "react";
-const key = { key: "" };
+import key from "../../keys.json"
 class MainContent2 extends Component {
 	constructor(props) {
 		super(props);
@@ -77,7 +77,7 @@ class MainContent2 extends Component {
 				<Box sx={{ m: "1rem" }} />
 				<div className="padded" style={{ height: "80vh", width: "80%" }}>
 					<GoogleMapReact
-						bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY}}
+						bootstrapURLKeys={{ key: key["key"]}}
 						defaultCenter={this.props.center}
 						defaultZoom={this.props.zoom}
 					>

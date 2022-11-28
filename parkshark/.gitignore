@@ -24,4 +24,4 @@ yarn-debug.log*
 yarn-error.log*
 
 #keys
-keys.json
+src/keys.json
