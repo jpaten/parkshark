@@ -23,7 +23,6 @@ Run \
 `$ npm run serve`
 
 ## Start frontend
-Set \
- `REACT_APP_GOOGLE_MAPS_API_KEY=<your-api-key>` \
+In `src/keys.json`set the `key` field to a Google Maps API Key with access to the Dynamic Maps API and the Geocoding API, otherwise the site will not work.
 Run \
 `$ npm start`
