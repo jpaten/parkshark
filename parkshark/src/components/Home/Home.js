@@ -77,7 +77,7 @@ class MainContent2 extends Component {
 				<Box sx={{ m: "1rem" }} />
 				<div className="padded" style={{ height: "80vh", width: "80%" }}>
 					<GoogleMapReact
-						bootstrapURLKeys={{ key: key["key"] }}
+						bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY}}
 						defaultCenter={this.props.center}
 						defaultZoom={this.props.zoom}
 					>
