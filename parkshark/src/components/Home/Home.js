@@ -69,7 +69,8 @@ class MainContent2 extends Component {
 					<button className="padded">Explore more listings</button>
 					<button className="padded">Create a new listing</button>
 				</div>
-				<div style={{ height: "80vh", width: "80%" }}>
+				<Box sx={{ m: "0.7rem" }} />
+				<div className="padded" style={{ height: "80vh", width: "80%" }}>
 					<GoogleMapReact
 						bootstrapURLKeys={{ key: key["key"] }}
 						defaultCenter={this.props.center}
