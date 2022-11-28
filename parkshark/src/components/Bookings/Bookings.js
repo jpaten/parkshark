@@ -18,7 +18,7 @@ class Bookings extends React.Component {
         console.log(this.state.listing_id);
         axios.get("listings/" + this.state.listing_id)
             .then(res => {
-            console.log(res.data);
+            console.log("booking ids", res.data.bookings_id);
             this.setState({ booking_ids: res.data.bookings_id});
             })
             .catch(e => console.log(e));

@@ -24,53 +24,62 @@ class BookingCard extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            render: true,
             booking: [],
-            user: []
+            user: [],
         };
         axios.get("bookings/" + props.result)
-        .then(res => {
-            console.log(res);
+            .then(res => {
+            console.log("booking",res);
             this.setState({ booking: res.data});
         })
-        .catch(e => console.log(e));
-
-        axios.get("users/" + this.state.booking.renter_id)
-            .then(res => {
-                console.log(res);
-                this.setState({ user: res.data});
+            .then(renterId => {
+                axios.get("users/" + renterId)
+                    .then(res => {
+                        console.log("user",res);
+                        this.setState({ user: res.data});
+                    })
+                    .catch(e => console.log("error",this.state.booking.renter_id,e));
             })
-        .catch(e => console.log(e));
+            .catch(e => {
+                console.log(e);
+                this.setState({render: false})
+            });
+
+
     }
 
     render() {
-        return (
-        <Grid item xs={12} sm={6} md={4}>
-            <ResultCard className="card">
-                <CardActionArea >
-                    <CardContent height="200px">
-                        <Typography gutterBottom variant="subtitle1" component="div" textAlign="left">
-                            Renter - {this.state.user.name}
-                        </Typography>
-                        <Typography gutterBottom variant="subtitle1" component="div" textAlign="left">
-                            Email - {this.state.user.email}
-                        </Typography>
-                    </CardContent>
-                        <Typography variant="body2" color="text.secondary" textAlign="left">
-                            Booking id: {this.state.booking._id}       
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" textAlign="left">
-                            Booking start time: {this.state.booking.start_time}       
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" textAlign="left">
-                            Booking end time: {this.state.booking.end_time}       
-                        </Typography>
-                </CardActionArea>
-                <div style={{float: "left"}}>
-                </div>
-            </ResultCard>
-        </Grid>
-        );
-    }    
+        if(this.state.render) {
+            return (
+                <Grid item xs={12} sm={6} md={4}>
+                    <ResultCard>
+                        <CardActionArea>
+                            <CardContent height="200px">
+                                <Typography gutterBottom variant="subtitle1" component="div" textAlign="left">
+                                    Booking:
+                                </Typography>
+                                <Typography gutterBottom variant="subtitle1" component="div" textAlign="left">
+                                    Renter Email - {this.state.user.email}
+                                </Typography>
+                            </CardContent>
+                            <Typography variant="body2" color="text.secondary" textAlign="left">
+                                Booking id: {this.state.booking._id}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary" textAlign="left">
+                                Booking start time: {new Date(this.state.booking.start_time).toLocaleDateString('en-US', { timeZone: 'UTC', minute: "numeric", hour:"numeric", month: 'short', day: 'numeric', year: 'numeric' })}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary" textAlign="left">
+                                Booking start time: {new Date(this.state.booking.end_time).toLocaleDateString('en-US', { timeZone: 'UTC', minute: "numeric", hour:"numeric", month: 'short', day: 'numeric', year: 'numeric' })}
+                            </Typography>
+                        </CardActionArea>
+                        <div style={{float: "left"}}>
+                        </div>
+                    </ResultCard>
+                </Grid>
+            );
+        }
+    }
 }
 
 export default BookingCard;
