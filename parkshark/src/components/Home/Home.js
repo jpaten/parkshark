@@ -64,12 +64,17 @@ class MainContent2 extends Component {
 				<div className="padded modernWhite">
 					<p>Explore nearby parking spots</p>
 				</div>
-				<Box sx={{ m: "0.7rem" }} />
-				<div>
-					<button className="padded">Explore more listings</button>
-					<button className="padded">Create a new listing</button>
+				<Box sx={{ m: "1rem" }} />
+				<div className="padded">
+					<a href="./Listings" className="padded" class="btn btn-secondary">
+						Explore more listings
+					</a>
+					<a href="./New" className="padded" class="btn btn-secondary">
+						Create new listing
+					</a>
 				</div>
-				<Box sx={{ m: "0.7rem" }} />
+
+				<Box sx={{ m: "1rem" }} />
 				<div className="padded" style={{ height: "80vh", width: "80%" }}>
 					<GoogleMapReact
 						bootstrapURLKeys={{ key: key["key"] }}

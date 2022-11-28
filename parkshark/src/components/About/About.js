@@ -282,11 +282,11 @@ class About extends React.Component {
 							<Founders>FOUNDERS</Founders>
 							<div className="member-box">
 								<p className="members">Drake Cote</p>
-								<p className="members">Sai</p>
-								<p className="members">Tay</p>
-								<p className="members">Jonah</p>
-								<p className="members">Brian</p>
-								<p className="members">Ben</p>
+								<p className="members">Sairisheek Muttukuru</p>
+								<p className="members">Yi Sheng Tay</p>
+								<p className="members">Jonah Paten</p>
+								<p className="members">Brian Roysar</p>
+								<p className="members">Benjamin Goldblatt</p>
 							</div>
 						</CubeDesign>
 						<LoremIpsumDolorSi>
