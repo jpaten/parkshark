@@ -1,6 +1,7 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
 
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,700,500|Inter:400");
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&display=swap');
 
 :root {
     --black: rgba(0, 0, 0, 1);
@@ -98,3 +99,16 @@
     font-weight: 700;
     font-style: normal;
   }
+
+h1, p{
+  font-family: 'Jura', sans-serif;
+  color: white;
+}
+p{
+  margin-top: 10px;
+  font-size: 21px;
+}
+
+.padded{
+  margin-left: 53px;
+}
