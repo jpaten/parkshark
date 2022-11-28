@@ -36,6 +36,7 @@
   pointer-events: auto;
   width: 100%;
   background-color: black;
+  min-height: 1500px;
 }
 
 .about1 {
