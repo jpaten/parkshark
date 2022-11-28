@@ -70,7 +70,7 @@ class BookingCard extends React.Component {
                                 Booking start time: {new Date(this.state.booking.start_time).toLocaleDateString('en-US', { timeZone: 'UTC', minute: "numeric", hour:"numeric", month: 'short', day: 'numeric', year: 'numeric' })}
                             </Typography>
                             <Typography variant="body2" color="text.secondary" textAlign="left">
-                                Booking start time: {new Date(this.state.booking.end_time).toLocaleDateString('en-US', { timeZone: 'UTC', minute: "numeric", hour:"numeric", month: 'short', day: 'numeric', year: 'numeric' })}
+                                Booking end time: {new Date(this.state.booking.end_time).toLocaleDateString('en-US', { timeZone: 'UTC', minute: "numeric", hour:"numeric", month: 'short', day: 'numeric', year: 'numeric' })}
                             </Typography>
                         </CardActionArea>
                         <div style={{float: "left"}}>
