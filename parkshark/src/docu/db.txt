@@ -38,8 +38,9 @@ REST API
     > User wants to get renter bookings/host bookings/listings by ID
 
 -Create: POST /listings
--Read: GET /listings?long=dec&lat=dec&host_id=string&price_lo=dec&price_hi=dec&starttime=t1&endtime=t2&limit=int&skip=int
+-Read: GET /listings?long=dec&lat=dec&max_dist=int&host_id=string&price_lo=dec&price_hi=dec&starttime=t1&endtime=t2&limit=int&skip=int
     params: long, lat (for search by location)
+            max_dist (in miles, maximum distance from coordinates)
             host_id
             price_lo, price_hi (for search by pricing)
             starttime, endtime (for search by availability)

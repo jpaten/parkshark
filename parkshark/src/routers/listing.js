@@ -13,8 +13,8 @@ router.post('/listings', async (req, res) => {
     }
 })
 
-// (R) GET listings /listings?long=dec&lat=dec&host_id=string&price_lo=dec&price_hi=dec&starttime=t1&endtime=t2&limit=l&skip=s
-// Filter listings by location (long, lat), time availability, host (?), price range
+// (R) GET listings /listings?long=dec&lat=dec&host_id=string&max_dist=int&price_lo=dec&price_hi=dec&starttime=t1&endtime=t2&limit=l&skip=s
+// Filter listings by location (long, lat), max distance (mi), time availability, host (?), price range
 // ?limit=10&skip=10
 // PRECONDITION: Requests must have starttime and endtime populated
 router.get('/listings', async (req, res) => {
@@ -23,7 +23,7 @@ router.get('/listings', async (req, res) => {
     var maxDistInMiles = 5
     if (req.query.long && req.query.lat) {
         if (req.query.max_dist) {
-            maxDistInMiles = req.query.max_dist
+            maxDistInMiles = req.query.max_dist 
         }
         // returns listings ordered by nearest to long, lat
         match.location = {$nearSphere: {

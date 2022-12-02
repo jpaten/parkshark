@@ -27,29 +27,6 @@ mongoose.connect(dbUrl, { useNewUrlParser : true,
 
 // ********************************************************************
 // User API
-// function createUser(userData){
-//     const user = new User(userData);
-//     user.save().then(() => {
-//         console.log("Saved user successfully");
-//     }).catch((error) => {
-//         console.log("Error: ", error);
-//     });
-
-//     return user._id;
-// }
-
-// function queryUser(userId) {
-//     return User.findById(userId);
-// }
-
-// function updateUser(userId) {
-//     return;
-// }  
-
-// function removeUser(userId) {
-//     return;
-// }
-  
 
 function addBookingIdToUser(bookingId, renterId, type) {
     if (type === "renter"){
@@ -58,7 +35,6 @@ function addBookingIdToUser(bookingId, renterId, type) {
                 if (err) {
                     return console.log("Error: " + err);
                 }
-                // console.log("Original doc: " + docs)
             });
     } else if (type === "host"){
         User.findOneAndUpdate({"_id": renterId},
@@ -66,7 +42,6 @@ function addBookingIdToUser(bookingId, renterId, type) {
                 if (err) {
                     return console.log("Error: " + err);
                 }
-                // console.log("Original doc: " + docs)
             });
     } else {
         console.log("Invalid type of renter to add bookingId!")
@@ -76,18 +51,6 @@ function addBookingIdToUser(bookingId, renterId, type) {
 
 // ********************************************************************
 // Listing API
-
-// function createListing(listingData) {
-//     //listingData.userid = new ObjectId(listingData.userid);
-//     const listing = new Listing(listingData);
-//     listing.save().then(() => {
-//         console.log("Saved listing successfully");
-//     }).catch((error) => {
-//         console.log("Error: ", error);
-//     });
-//     return listing._id;
-
-// }
 
 function queryListing(listingId){
     return Listing.findById(listingId);
@@ -99,7 +62,6 @@ function addBookingIdToListing(listingId, bookingId) {
             if (err) {
                 return console.log("Error: " + err);
             }
-            // console.log("Original doc: " + docs)
         })
 }
 
